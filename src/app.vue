@@ -9,9 +9,9 @@
  </template>
  
  <script>
-   import Header from '@/components/Header'
-   import Footer from '@/components/Footer'
-   import Navbar from '@/components/Navbar'
+   import Header from '@/views/Header'
+   import Footer from '@/views/Footer'
+   import Navbar from '@/views/Navbar'
    export default {
      name: 'app',
      data () {
@@ -26,6 +26,31 @@
  </script>
  
 <style scoped lang="stylus">
+  body
+    padding 0
+    margin  0
+
   #app
     padding 0
+    margin  0
+    font-size 25px
+    width 1000px
+    height 750px
+    background-color red
+
+  #header
+    height 30%
+    background-color yellow 
+
+  #navbar
+    height 10%
+    background-color blue
+
+  #home
+    height 50%
+    background-color green
+
+  #footer
+    height 10%
+    background-color gray
 </style>

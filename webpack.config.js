@@ -6,7 +6,7 @@ const HTMLPlugin = require('html-webpack-plugin');
 const isDev = process.env.NODE_ENV === 'development';
 
 
- 
+
 //__dirname表示文件相对于工程的路径
 module.exports ={
   entry: path.join(__dirname, 'src/index.js'),
@@ -40,7 +40,7 @@ module.exports ={
     rules: [
        {//通过vue-loader来识别以vue结尾的文件
          test: /.vue$/, 
-         loader: 'vue-loader'
+         loader: 'vue-loader',
        },
        {//通过vue-loader来识别以vue结尾的文件
         test: /.css$/, 
@@ -48,15 +48,15 @@ module.exports ={
         use: [
           'style-loader',//接受潜在页面内部的style标签的文件。
           'css-loader'
-        ]
+        ],
       },
       {
-        test: /\.styl$/, 
+        test: /\.styl(us)?$/, 
         use: [
           'style-loader',
           'css-loader',
           'stylus-loader'
-        ]
+        ],
       },
       {//处理图片文件
         test: /\.(gif|jpg|jpeg|png|svg)$/ ,
@@ -95,7 +95,9 @@ if(isDev){
     hot: true,
     overlay: {
       erros: true,
-    }
+    },
+    historyApiFallback: true,
+    noInfo: true
   };
   module.exports.plugins.push(
     new webpack.HotModuleReplacementPlugin(), //热加载
