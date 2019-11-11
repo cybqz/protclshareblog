@@ -30,22 +30,22 @@ const router = new Router({
           component :  Content,
           children : [
               {
-                path : '/a',
+                path : 'a',
                 name : 'A',
                 component :  A
               },
               {
-                path : '/b',
+                path : 'b',
                 name : 'B',
                 component :  B
               },
               {
-                path : '/c',
+                path : 'c',
                 name : 'C',
                 component :  C
               },
               {
-                path : '/d',
+                path : 'd',
                 name : 'D',
                 component :  D
               }
