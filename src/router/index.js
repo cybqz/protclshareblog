@@ -57,7 +57,6 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
     console.log('开始页面切换');
     console.log(to.fullPath);
-    next();
   });
 
 export default router;

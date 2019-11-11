@@ -36,21 +36,21 @@
     font-size 25px
     width 1000px
     height 750px
-    background-color red
+    border solid red 1px
 
   #header
     height 30%
-    background-color yellow 
+    border solid yellow 1px
 
   #navbar
     height 10%
-    background-color blue
+    border solid blue 1px
 
   #home
     height 50%
-    background-color green
+    border solid green 1px
 
   #footer
     height 10%
-    background-color gray
+    border solid gray 1px
 </style>

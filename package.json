@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/cybqz/tecshareblog#readme",
   "dependencies": {
+    "axios": "^0.19.0",
     "cli": "^1.0.1",
     "cross-env": "^6.0.3",
     "css-loader": "^3.2.0",
