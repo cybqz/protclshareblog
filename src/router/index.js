@@ -28,6 +28,21 @@ const router = new Router({
           path : '/content',
           name : 'Content',
           component :  Content,
+          beforeRouteEnter (to, from, next) {
+            console.log(from.fullPath);
+            console.log(to.fullPath);
+            next();
+          },
+          beforeRouteUpdate (to, from, next) {
+            console.log(from.fullPath);
+            console.log(to.fullPath);
+            next();
+          },
+          beforeRouteLeave (to, from, next) {
+            console.log(from.fullPath);
+            console.log(to.fullPath);
+            next();
+          },
           children : [
               {
                 path : 'a',
@@ -54,9 +69,11 @@ const router = new Router({
   ]
 })
 
+//路由全局前置守卫
 router.beforeEach((to, from, next) => {
-    console.log('开始页面切换');
-    console.log(to.fullPath);
-  });
+  console.log(from.fullPath);
+  console.log(to.fullPath);
+  next();
+})
 
 export default router;

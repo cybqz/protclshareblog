@@ -21,7 +21,24 @@
        "app-header": Header,
        "app-footer": Footer,
        'app-nav': Navbar
-     }
+     },
+     mounted(){
+
+       //hash模式下监听地址栏路由变化
+       window.addEventListener('hashchange',()=>{
+            var currentPath = window.location.hash.slice(1); // 获取输入的路由
+            console.log('=============================');
+            console.log(currentPath);
+            if(this.$router.path !== currentPath){
+                this.$router.push(currentPath); // 动态跳转
+            }
+       },false);
+    },
+    watch:{
+      $route(to,from){
+        console.log(to.path);
+      }
+    }
    }
  </script>
  
