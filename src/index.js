@@ -1,5 +1,6 @@
 //这是工程的入口文件
 import Vue from 'vue';
+import Vuex from 'vuex';
 import App from '@/app';
 import VueRouter from 'vue-router';
 import VueResource from 'vue-resource';
@@ -23,6 +24,18 @@ Vue.use(ViewUI, {
       arrowSize: 20
   }
 });
+Vue.use(Vuex);
+
+const store = new Vuex.Store({
+  state: {
+    count: 0
+  },
+  mutations: {
+    increment (state) {
+      state.count++
+    }
+  }
+})
 
 // axios 配置
 axios.defaults.timeout = 5000
@@ -36,7 +49,8 @@ document.body.appendChild(root)
 //mount就是讲我们的App挂载到root这样一个根节点中去
 new Vue({
   el: '#app',
-  router,//引用router
+  store, //将store注入到所有子组件
+  router, //引用router
   template: '<App/>',
   components: { App },
   render: (h) => h(App)

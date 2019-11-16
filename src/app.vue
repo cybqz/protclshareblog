@@ -1,10 +1,25 @@
 <template>
     <div id="app">
-      <app-header></app-header>
-      <app-nav></app-nav>
-      <!-- 展示router -->
-      <router-view></router-view>
-      <app-footer></app-footer>
+      <div class="layout">
+        <Layout>
+          <Header>
+            <app-header></app-header>
+          </Header>
+        </Layout>
+        <Layout>
+          <app-nav></app-nav>
+        </Layout>
+        <Layout>
+          <Content>
+            <router-view></router-view>
+          </Content>
+        </Layout>
+        <Layout>
+          <Footer>
+            <app-footer></app-footer>
+          </Footer>
+        </Layout>
+      </div>
     </div>
  </template>
  
@@ -27,8 +42,6 @@
        //hash模式下监听地址栏路由变化
        window.addEventListener('hashchange',()=>{
             var currentPath = window.location.hash.slice(1); // 获取输入的路由
-            console.log('=============================');
-            console.log(currentPath);
             if(this.$router.path !== currentPath){
                 this.$router.push(currentPath); // 动态跳转
             }
@@ -46,28 +59,31 @@
   body
     padding 0
     margin  0
+    background-color #f8f8f9
 
   #app
     padding 0
-    margin  0
+    margin  20px auto
     font-size 25px
-    width 1000px
-    height 750px
-    border solid red 1px
+    width 90%
 
-  #header
-    height 30%
-    border solid yellow 1px
+  .ivu-layout-header
+    height 200px
 
   #navbar
-    height 10%
-    border solid blue 1px
+    margin-top 4px
 
-  #home
-    height 50%
-    border solid green 1px
+  .ivu-layout-content
+    height 500px
+    border none
 
-  #footer
-    height 10%
-    border solid gray 1px
+  .ivu-layout-footer
+    height 200px
+
+  .layout
+    border: 1px solid #d7dde4;
+    background: #f5f7f9;
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
 </style>
