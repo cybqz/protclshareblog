@@ -1,25 +1,23 @@
 <template>
     <div id="app">
-      <div class="layout">
-        <Layout>
-          <Header>
-            <app-header></app-header>
-          </Header>
-        </Layout>
-        <Layout>
-          <app-nav></app-nav>
-        </Layout>
-        <Layout>
-          <Content>
-            <router-view></router-view>
-          </Content>
-        </Layout>
-        <Layout>
-          <Footer>
-            <app-footer></app-footer>
-          </Footer>
-        </Layout>
-      </div>
+      <Layout >
+        <Header class="cyb-header">
+          <app-header></app-header>
+        </Header>
+      </Layout>
+      <Layout>
+        <app-nav></app-nav>
+      </Layout>
+      <Layout>
+        <Content>
+          <router-view></router-view>
+        </Content>
+      </Layout>
+      <Layout>
+        <Footer>
+          <app-footer></app-footer>
+        </Footer>
+      </Layout>
     </div>
  </template>
  
@@ -32,7 +30,7 @@
      data () {
        return {}
      },
-     components: {//局部注册组件这里，可能会定义多个组件，所以component这个单词加上“s”
+     components: {//局部注册组件这里，可能会定义多个组件
        "app-header": Header,
        "app-footer": Footer,
        'app-nav': Navbar
@@ -54,8 +52,13 @@
     }
    }
  </script>
+
+ <style lang="stylus">
  
-<style scoped lang="stylus">
+  
+ </style>
+
+ <style scoped lang="stylus">
   body
     padding 0
     margin  0
@@ -67,11 +70,16 @@
     font-size 25px
     width 90%
 
-  .ivu-layout-header
+  .ivu-layout,.ivu-layout-footer
+    background-color #ffffff
+
+  .cyb-header
     height 200px
+    padding 0 0
+    line-height 0
 
   #navbar
-    margin-top 4px
+    margin 6px 0px 6px 0px
 
   .ivu-layout-content
     height 500px
@@ -86,4 +94,4 @@
     position: relative;
     border-radius: 4px;
     overflow: hidden;
-</style>
+ </style>

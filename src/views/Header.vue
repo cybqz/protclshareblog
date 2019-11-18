@@ -1,16 +1,24 @@
 <template>
-    <Carousel autoplay v-model="value2" loop>
+    <Carousel autoplay loop>
         <CarouselItem>
-            <div class="demo-carousel">1</div>
+            <div>
+                <img src="@/static/image/banner/banner01.jpg" alt="">
+            </div>
         </CarouselItem>
         <CarouselItem>
-            <div class="demo-carousel">2</div>
+            <div>
+                <img src="@/static/image/banner/banner02.jpg" alt="">
+            </div>
         </CarouselItem>
         <CarouselItem>
-            <div class="demo-carousel">3</div>
+            <div>
+                <img src="@/static/image/banner/banner01.jpg" alt="">
+            </div>
         </CarouselItem>
         <CarouselItem>
-            <div class="demo-carousel">4</div>
+            <div>
+                <img src="@/static/image/banner/banner02.jpg" alt="">
+            </div>
         </CarouselItem>
     </Carousel>
 </template>
@@ -18,6 +26,11 @@
 
     .ivu-carousel
         height 200px
+
     .ivu-carousel-list
         height 200px
+    
+    img
+        height 200px
+        width 100%
 </style>
