@@ -5,6 +5,7 @@ import App from '@/app';
 import VueRouter from 'vue-router';
 import VueResource from 'vue-resource';
 import router from './router';
+import store from './store';
 import axios from 'axios';
 
 import ViewUI from 'iview';
@@ -25,17 +26,6 @@ Vue.use(ViewUI, {
   }
 });
 Vue.use(Vuex);
-
-const store = new Vuex.Store({
-  state: {
-    count: 0
-  },
-  mutations: {
-    increment (state) {
-      state.count++
-    }
-  }
-})
 
 // axios 配置
 axios.defaults.timeout = 5000

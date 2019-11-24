@@ -1,10 +1,9 @@
 <template>
     <div id="content">
         <div>
-            <Button icon="md-add" type="primary" shape="circle" @click="value3 = true"></Button>
             <Drawer
                 title="Create"
-                v-model="value3"
+                v-model="showDrawer"
                 width="720"
                 :mask-closable="true"
                 :styles="styles"
@@ -63,8 +62,8 @@
                     </FormItem>
                 </Form>
                 <div class="demo-drawer-footer">
-                    <Button style="margin-right: 8px" @click="value3 = false">取消</Button>
-                    <Button type="primary" @click="value3 = false">添加</Button>
+                    <Button style="margin-right: 8px" @click="showDrawer = false">取消</Button>
+                    <Button type="primary" @click="showDrawer = false">添加</Button>
                 </div>
             </Drawer>    
         </div>
@@ -80,43 +79,59 @@
         
 </style>
 <script>
-    export default {
-        data(){
-            return {
-                    value3: false,
-                    styles: {
-                        height: 'calc(100% - 55px)',
-                        overflow: 'auto',
-                        paddingBottom: '53px',
-                        position: 'static'
-                    },
-                    formData: {
-                        name: '',
-                        url: '',
-                        owner: '',
-                        type: '',
-                        approver: '',
-                        date: '',
-                        desc: ''
-                    },
-                }
-        },
-        methods:{
-            test: function(){
-                this.$axios.get('yjdwyjqxjl/qxdjpage',{
-                    params: {                           //参数
-                        current: 1,
-                        size: 10,
-                    },
-                    }).then(res => {                   //请求成功后的处理函数     
-                        console.log(res);   
-                    }).catch(err => {                 //请求失败后的处理函数   
-                        console.log(err);
-                    })
+export default {
+    data(){
+        return {
+                styles: {
+                    height: 'calc(100% - 55px)',
+                    overflow: 'auto',
+                    paddingBottom: '53px',
+                    position: 'static'
+                },
+                formData: {
+                    name: '',
+                    url: '',
+                    owner: '',
+                    type: '',
+                    approver: '',
+                    date: '',
+                    desc: ''
+                },
             }
-        },
-        created(){
-            this.test();
+    },
+    methods:{
+        test: function(){
+            this.$axios.get('yjdwyjqxjl/qxdjpage',{
+                params: {                           //参数
+                    current: 1,
+                    size: 10,
+                },
+                }).then(res => {                   //请求成功后的处理函数     
+                    console.log(res);   
+                }).catch(err => {                 //请求失败后的处理函数   
+                    console.log(err);
+                })
+        }
+    },
+    created(){
+        this.test();
+    },
+    computed: {
+        showDrawer: {
+            get(){
+                return this.$store.state.showDrawer;　　//需要监听的数据
+            },
+            set(val){
+                if(!val){
+                    this.$store.commit('SET_SHOW_DRAWER',val);
+                }
+            }
+        }
+    },
+    watch: {
+        showDrawer: function(){
+            this.showDrawer = true;
         }
     }
+}
 </script>
