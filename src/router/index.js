@@ -3,7 +3,7 @@ import Router from 'vue-router'
 
 import Home from '@/views/Home'
 import Content from '@/views/Content'
-import A from '@/views/content/A'
+import TecLearning from '@/views/content/TecLearning'
 import B from '@/views/content/B'
 import C from '@/views/content/C'
 import D from '@/views/content/D'
@@ -45,9 +45,9 @@ const router = new Router({
           },
           children : [
               {
-                path : 'a',
-                name : 'A',
-                component :  A
+                path : 'teclearning',
+                name : 'TecLearning',
+                component :  TecLearning
               },
               {
                 path : 'b',

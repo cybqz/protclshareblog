@@ -82,7 +82,6 @@
     margin 6px 0px 6px 0px
 
   .ivu-layout-content
-    height 500px
     border none
 
   .ivu-layout-footer
