@@ -8,6 +8,8 @@ import router from './router';
 import store from './store';
 import axios from 'axios';
 
+import VueAnime from 'vue-animejs';
+
 import ViewUI from 'iview';
 import 'iview/dist/styles/iview.css';
 
@@ -16,6 +18,7 @@ Vue.prototype.$axios = axios;
 Vue.config.productionTip = false;
 Vue.use(VueResource);
 Vue.use(VueRouter);
+Vue.use(VueAnime);
 Vue.use(ViewUI, {
   transfer: true,
   size: 'large',

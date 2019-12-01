@@ -6,7 +6,7 @@
             </div>
             <div class="article">
                 <span class="article-author">
-                    <Icon type="md-contact" />
+                    <Icon type="md-person" />
                     <span>{{item.author}}</span>
                 </span>    
                 <span class="article-category">
@@ -26,7 +26,17 @@
             <div class="sketch">
                 {{item.sketch}}
             </div>
-            <Button type="primary" shape="circle" icon="md-eye">阅读全部</Button>
+            <div class="sketch">
+                display:{{item.status}}
+            </div>
+            <Button type="primary" shape="circle" icon="md-eye" @click="readAll(index)">阅读全部</Button>
+            <!-- <div :id="'content-'+index" class="content" :v-if="item.status" :ref="'content-'+index"
+                 v-anime="{ rotate: '1turn', duration: 2000, loop: false }">
+                {{item.content}}
+            </div> -->
+            <div  class="content" v-if="item.status" >
+                {{item.content}}
+            </div>
         </div>
     </div>
 </template>
@@ -36,32 +46,65 @@ export default {
   data () {
     return {
       msg: 'Hi, I am JSPang',
-      blogList: [
-        {title: 'VUE', author: '张三', category: '技术框架1', tag: '雪花算法', date: '2019-11-11',
-           img: 'https://raw.githubusercontent.com/hansonwang99/pic/master/id-springbt-starter/profile.JPG',
-           sketch: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'},
-        {title: 'VUE', author: '张三', category: '技术框架2', tag: '雪花算法', date: '2019-11-11',
-           img: 'https://raw.githubusercontent.com/hansonwang99/pic/master/id-springbt-starter/profile.JPG',
-           sketch: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'}
-      ]
+      blogList: []
     }
   },
   methods:{
         test: function(){
-            this.$axios.get('yjdwyjqxjl/qxdjpage',{
-                params: {                           //参数
-                    current: 1,
-                    size: 10,
-                },
-                }).then(res => {                   //请求成功后的处理函数     
-                    console.log(res);   
-                }).catch(err => {                 //请求失败后的处理函数   
-                    console.log(err);
-                })
+            // this.$axios.get('yjdwyjqxjl/qxdjpage',{
+            //     params: {                           //参数
+            //         current: 1,
+            //         size: 10,
+            //     },
+            //     }).then(res => {                   //请求成功后的处理函数     
+            //         console.log(res);   
+            //     }).catch(err => {                 //请求失败后的处理函数   
+            //         console.log(err);
+            //     })
+        },
+
+        //阅读全部
+        readAll: function(index){
+            debugger
+            console.log(index);
+            let status = this.blogList[index].status
+            this.blogList[index].status = !status;
+            // this.$refs['content-' + index].display='block';
+            // this.$anime.timeline().add({
+            //     targets,
+            //     translateX: 250,
+            //     easing: 'easeOutExpo',
+            // }).add({
+            //     targets,
+            //     translateX: 250,
+            //     easing: 'easeOutExpo',
+            // });
         }
     },
     created(){
         this.test();
+    },
+    mounted(){  
+        this.blogList=[
+            {title: 'VUE', author: '张三', category: '技术框架1', tag: '雪花算法', date: '2019-11-11',
+            img: 'https://raw.githubusercontent.com/hansonwang99/pic/master/id-springbt-starter/profile.JPG',
+            sketch: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+            content: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'},
+            {title: 'VUE', author: '张三', category: '技术框架1', tag: '雪花算法', date: '2019-11-11',
+            img: 'https://raw.githubusercontent.com/hansonwang99/pic/master/id-springbt-starter/profile.JPG',
+            sketch: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+            content: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'}
+        ]
+        console.log(
+            this.blogList
+        )
+        for(let i in this.blogList){
+            this.blogList[i].status = false;
+            this.$set(this.blogList[i],i,this.blogList[i].status);
+        }
+        console.log(
+            this.blogList
+        )
     }
 }
 </script>
@@ -97,4 +140,8 @@ export default {
 .container > button
     background-color #4b4b4b
     border-color #c2c2c2
+
+.content
+    margin 20px
+    word-break break-all
 </style>
