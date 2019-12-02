@@ -22,19 +22,13 @@
                     <span>{{item.date}}</span>
                 </span>    
             </div>
-            <img class="titleimg" :src="item.img"/>
+            <!-- <img class="titleimg" :src="item.img"/> -->
             <div class="sketch">
                 {{item.sketch}}
             </div>
-            <div class="sketch">
-                display:{{item.status}}
-            </div>
             <Button type="primary" shape="circle" icon="md-eye" @click="readAll(index)">阅读全部</Button>
-            <!-- <div :id="'content-'+index" class="content" :v-if="item.status" :ref="'content-'+index"
+            <div class="content" v-if="item.status" :ref="'content-'+item"
                  v-anime="{ rotate: '1turn', duration: 2000, loop: false }">
-                {{item.content}}
-            </div> -->
-            <div  class="content" v-if="item.status" >
                 {{item.content}}
             </div>
         </div>
@@ -45,7 +39,6 @@ export default {
   name: 'TecLearning',
   data () {
     return {
-      msg: 'Hi, I am JSPang',
       blogList: []
     }
   },
@@ -65,26 +58,29 @@ export default {
 
         //阅读全部
         readAll: function(index){
-            debugger
-            console.log(index);
             let status = this.blogList[index].status
-            this.blogList[index].status = !status;
-            // this.$refs['content-' + index].display='block';
-            // this.$anime.timeline().add({
-            //     targets,
-            //     translateX: 250,
-            //     easing: 'easeOutExpo',
-            // }).add({
-            //     targets,
-            //     translateX: 250,
-            //     easing: 'easeOutExpo',
-            // });
+
+            //关闭动画
+            if(status){
+                let targets = this.$refs['content-' + index];
+                this.$anime.timeline().add({
+                    targets,
+                    translateX: 250,
+                    easing: 'easeOutExpo',
+                }).add({
+                    targets,
+                    translateX: 250,
+                    easing: 'easeOutExpo',
+                }).complete(this.$set(this.blogList[index],'status',false));
+            }else{
+                this.$set(this.blogList[index],'status',true);
+            }
         }
     },
     created(){
         this.test();
     },
-    mounted(){  
+    mounted(){
         this.blogList=[
             {title: 'VUE', author: '张三', category: '技术框架1', tag: '雪花算法', date: '2019-11-11',
             img: 'https://raw.githubusercontent.com/hansonwang99/pic/master/id-springbt-starter/profile.JPG',
@@ -95,16 +91,9 @@ export default {
             sketch: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
             content: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'}
         ]
-        console.log(
-            this.blogList
-        )
         for(let i in this.blogList){
-            this.blogList[i].status = false;
-            this.$set(this.blogList[i],i,this.blogList[i].status);
+            this.$set(this.blogList[i],'status',false);
         }
-        console.log(
-            this.blogList
-        )
     }
 }
 </script>
