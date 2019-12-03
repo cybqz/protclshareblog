@@ -8,17 +8,17 @@ const debug = true
 
 export default new Vuex.Store({
     state: {
-        showDrawer: false
+        model: '' //当前选中的模块
     },
     mutations: {
-        [types.SET_SHOW_DRAWER](state, showDrawer) {
-            state.showDrawer = showDrawer
+        [types.SET_MODEL](state, model) {
+            state.model = model
         }
     },
     actions: {},
     getters: {            // 定义getters，可以通过mapGetters拓展函数调用
-        showDrawer: state => {
-            return state.showDrawer
+        model: state => {
+            return state.model
         }
     },
     plugins: debug ? [createLogger()] : []   // 是否开启vuex的debug模式

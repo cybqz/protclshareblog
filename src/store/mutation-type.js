@@ -1,1 +1,1 @@
-export const SET_SHOW_DRAWER = 'SET_SHOW_DRAWER'
+export const SET_MODEL = 'SET_MODEL'

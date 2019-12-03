@@ -2,104 +2,81 @@
     <div id="content">
        <div id="btn-list">
             <div id="btn-list-left">
-                <Input search placeholder="Enter something..." />
+                <Input v-model="query.a" search placeholder="Enter something..." />
             </div>
             <div id="btn-list-right">
-                <Select v-model="model10" multiple style="width:260px">
+                <Select v-model="query.b" multiple style="width:260px">
                     <Option v-for="item in selectList" :value="item.value" :key="item.value">{{ item.label }}</Option>
                 </Select>
                 <Button icon="md-add" type="primary" shape="circle" @click="changeShowDrawer"></Button>
             </div>
         </div>
         <Drawer
-            title="Create"
-            v-model="showDrawer"
+            :title="drawer.title"
+            v-model="drawer.isShow"
             width="720"
             :mask-closable="true"
-            :styles="styles"
+            :styles="drawer.styles"
         >
-            <Form :model="formData">
+            <Form :model="blog">
                 <Row :gutter="32">
-                    <Col span="12">
-                        <FormItem label="Name" label-position="top">
-                            <Input v-model="formData.name" placeholder="please enter user name" />
-                        </FormItem>
-                    </Col>
-                    <Col span="12">
-                        <FormItem label="Url" label-position="top">
-                            <Input v-model="formData.url" placeholder="please enter url">
-                                <span slot="prepend">http://</span>
-                                <span slot="append">.com</span>
-                            </Input>
+                    <Col span="32">
+                        <FormItem label="标题" label-position="top">
+                            <Input v-model="blog.title" placeholder="请输入标题" />
                         </FormItem>
                     </Col>
                 </Row>
                 <Row :gutter="32">
                     <Col span="12">
-                        <FormItem label="Owner" label-position="top">
-                            <Select v-model="formData.owner" placeholder="please select an owner">
+                        <FormItem label="分类" label-position="top">
+                            <Select v-model="blog.category" placeholder="请选择分类">
                                 <Option value="jobs">Steven Paul Jobs</Option>
                                 <Option value="ive">Sir Jonathan Paul Ive</Option>
                             </Select>
                         </FormItem>
                     </Col>
                     <Col span="12">
-                        <FormItem label="Type" label-position="top">
-                            <Select v-model="formData.type" placeholder="please choose the type">
-                                <Option value="private">Private</Option>
-                                <Option value="public">Public</Option>
-                            </Select>
+                        <FormItem label="标签" label-position="top">
+                            <Input v-model="blog.tag" placeholder="请输入标签" />
                         </FormItem>
                     </Col>
                 </Row>
-                <Row :gutter="32">
-                    <Col span="12">
-                        <FormItem label="Approver" label-position="top">
-                            <Select v-model="formData.approver" placeholder="please choose the approver">
-                                <Option value="jobs">Steven Paul Jobs</Option>
-                                <Option value="ive">Sir Jonathan Paul Ive</Option>
-                            </Select>
-                        </FormItem>
-                    </Col>
-                    <Col span="12">
-                        <FormItem label="DateTime" label-position="top">
-                            <DatePicker v-model="formData.date" type="daterange" placeholder="please select the date" style="display: block" placement="bottom-end"></DatePicker>
-                        </FormItem>
-                    </Col>
-                </Row>
-                <FormItem label="Description" label-position="top">
-                    <Input type="textarea" v-model="formData.desc" :rows="4" placeholder="please enter the description" />
+                <FormItem label="描述" label-position="top">
+                    <Input type="textarea" v-model="blog.desc" :rows="4" placeholder="请输入描述" />
                 </FormItem>
             </Form>
             <div class="demo-drawer-footer">
-                <Button style="margin-right: 8px" @click="showDrawer = false">取消</Button>
-                <Button type="primary" @click="showDrawer = false">添加</Button>
+                <Button style="margin-right: 8px" @click="drawer.isShow = false">取消</Button>
+                <Button type="primary" @click="drawer.isShow = false">添加</Button>
             </div>
         </Drawer>    
         <router-view></router-view>   
     </div>
 </template>
 <script>
+import {mapMutations, mapGetters, mapState} from 'vuex'  // 引入map方法
 export default {
     data(){
         return {
-                model10:'',
-                styles: {
-                    height: 'calc(100% - 55px)',
-                    overflow: 'auto',
-                    paddingBottom: '53px',
-                    position: 'static'
-                },
-                formData: {
-                    name: '',
-                    url: '',
-                    owner: '',
-                    type: '',
-                    approver: '',
-                    date: '',
+                query:{a: '', b:''},
+                blog: {
+                    title: '',
+                    author: '',
+                    category: '',
+                    tag: '',
                     desc: ''
                 },
-                showDrawer: false,
+                drawer: {
+                    isShow: false,
+                    title: '',
+                    styles: {
+                        height: 'calc(100% - 55px)',
+                        overflow: 'auto',
+                        paddingBottom: '53px',
+                        position: 'static'
+                    },
+                    teclearning: false
+                },
                 selectList: [
                     {
                         value: 'New York',
@@ -131,7 +108,12 @@ export default {
         },
         //显示Drawer
         changeShowDrawer: function(){
-            this.showDrawer = true
+            this.drawer.isShow = true;
+            let model = this.$store.state.model;
+            if(model === 'teclearning'){
+                this.drawer.teclearning = true;
+                this.drawer.title = '添加技术学习';
+            }
         },
     },
     created(){

@@ -1,19 +1,19 @@
 <template>
     <div id="navbar">
-       <Menu mode="horizontal" :theme="theme" active-name="1" @on-select="switchMenu">
-            <MenuItem name="1">
+       <Menu mode="horizontal" :theme="theme" active-name="teclearning" @on-select="switchMenu">
+            <MenuItem name="teclearning">
                 <Icon type="ios-paper" />
                 <router-link to="/content/teclearning">技术学习</router-link>
             </MenuItem>
-            <MenuItem name="2">
+            <MenuItem name="b">
                 <Icon type="ios-people" />
                 <router-link to="/content/b">埋坑笔记</router-link>
             </MenuItem>
-            <MenuItem name="3">
+            <MenuItem name="c">
                 <Icon type="ios-paper" />
                 <router-link to="/content/c">项目介绍</router-link>
             </MenuItem>
-            <MenuItem name="4">
+            <MenuItem name="d">
                 <Icon type="ios-construct" />
                 <router-link to="/content/d">我的模板</router-link>
             </MenuItem>
@@ -35,6 +35,7 @@
 </style>
 <script>
     import {mapMutations, mapGetters, mapState} from 'vuex'  // 引入map方法
+    import {SET_MODEL} from '@/store/mutation-type'
     export default {
         data () {
             return {
@@ -44,7 +45,7 @@
         methods: {
             //切换导航菜单
             switchMenu: function (name){
-                console.log(name);
+                this.$store.commit(SET_MODEL,name);
             }
         }
     }

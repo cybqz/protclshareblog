@@ -1,6 +1,6 @@
 <template>
     <div id="tec-learning">
-        <div class="container" v-for="(item , index) in blogList" :key="index">
+        <div :id="'container-'+index" class="container" v-for="(item , index) in blogList" :key="index" :ref="'container-'+index">
             <div class="title">
                 {{item.title}}
             </div>
@@ -22,13 +22,12 @@
                     <span>{{item.date}}</span>
                 </span>    
             </div>
-            <!-- <img class="titleimg" :src="item.img"/> -->
+            <img class="titleimg" :src="getImageUrl(item.img)"/>
             <div class="sketch">
                 {{item.sketch}}
             </div>
             <Button type="primary" shape="circle" icon="md-eye" @click="readAll(index)">阅读全部</Button>
-            <div class="content" v-if="item.status" :ref="'content-'+item"
-                 v-anime="{ rotate: '1turn', duration: 2000, loop: false }">
+            <div :id="'content-'+index" class="content" v-show="item.status" :ref="'content-'+index">
                 {{item.content}}
             </div>
         </div>
@@ -39,7 +38,8 @@ export default {
   name: 'TecLearning',
   data () {
     return {
-      blogList: []
+      blogList: [],
+
     }
   },
   methods:{
@@ -58,39 +58,57 @@ export default {
 
         //阅读全部
         readAll: function(index){
-            let status = this.blogList[index].status
-
+            let _this = this;
+            let status = _this.blogList[index].status;
+            let containerTgt = _this.$refs['container-' + index];
+            let contentTgt = _this.$refs['content-' + index];
             //关闭动画
             if(status){
-                let targets = this.$refs['content-' + index];
-                this.$anime.timeline().add({
-                    targets,
-                    translateX: 250,
-                    easing: 'easeOutExpo',
-                }).add({
-                    targets,
-                    translateX: 250,
-                    easing: 'easeOutExpo',
-                }).complete(this.$set(this.blogList[index],'status',false));
-            }else{
-                this.$set(this.blogList[index],'status',true);
+                _this.$anime({
+                    targets: contentTgt,
+                    translateY: -10,
+                    duration: 500, //持续时间
+                    opacity: 0,
+                    delay: 0, //延迟
+                    easing: 'linear',
+                    update: function(anim) {},
+                    begin: function(anim) {},
+                    complete: function(anim) {
+                        _this.$set(_this.blogList[index],'status',false);
+                        //console.log('close  '+containerTgt[0].offsetHeight);
+                        console.log('close  '+contentTgt[0].offsetHeight);
+                    }
+                });
+            }else{  //打开动画
+                _this.$set(_this.blogList[index],'status',true);
+                //console.log('open  '+containerTgt[0].offsetHeight);
+                console.log('open  '+ contentTgt[0].offsetHeight);     
+                _this.$anime({
+                    targets: contentTgt,
+                    translateY: 10,
+                    duration: 500,
+                    opacity: 1,
+                    delay: 0,
+                    easing: 'linear'
+                });
             }
+        },
+
+        //加载图片
+        getImageUrl: function(img){
+            return require("@/assets/images/"+img+".png");
         }
     },
     created(){
         this.test();
     },
     mounted(){
-        this.blogList=[
-            {title: 'VUE', author: '张三', category: '技术框架1', tag: '雪花算法', date: '2019-11-11',
-            img: 'https://raw.githubusercontent.com/hansonwang99/pic/master/id-springbt-starter/profile.JPG',
+        for(let i = 0; i < 2; i++){
+            this.blogList.push({title: 'VUE', author: '张三', category: '技术框架1', tag: '雪花算法', date: '2019-11-11',
+            img: 'profile',
             sketch: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-            content: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'},
-            {title: 'VUE', author: '张三', category: '技术框架1', tag: '雪花算法', date: '2019-11-11',
-            img: 'https://raw.githubusercontent.com/hansonwang99/pic/master/id-springbt-starter/profile.JPG',
-            sketch: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-            content: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'}
-        ]
+            content: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'});
+        }
         for(let i in this.blogList){
             this.$set(this.blogList[i],'status',false);
         }
