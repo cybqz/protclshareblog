@@ -8,7 +8,7 @@ const debug = true
 
 export default new Vuex.Store({
     state: {
-        model: '' //当前选中的模块
+        model: 'teclearning' //当前选中的模块
     },
     mutations: {
         [types.SET_MODEL](state, model) {
