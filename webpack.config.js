@@ -5,9 +5,6 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HTMLPlugin = require('html-webpack-plugin');
 const isDev = process.env.NODE_ENV === 'development';
 
-
-console.log(path.join(__dirname, 'dist'))
-
 //__dirname表示文件相对于工程的路径
 module.exports ={
   entry: path.join(__dirname, 'src/index.js'),
@@ -20,7 +17,7 @@ module.exports ={
     extensions: ['.js', '.vue', '.json'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
-      '@': resolve('src'),
+      '@': resolve('src')
     }
   },
   devServer: {
