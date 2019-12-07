@@ -4,7 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import com.cyb.blogserver.domain.User;
-import com.cyb.blogserver.entity.Tips;
+import com.cyb.blogserver.common.Tips;
 
 public class UserValidate {
 	

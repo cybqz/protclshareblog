@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.cyb.blogserver.domain.User;
-import com.cyb.blogserver.entity.Tips;
+import com.cyb.blogserver.common.Tips;
 
 public interface LoginServices {
     

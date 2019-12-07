@@ -14,7 +14,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Service;
 import com.cyb.blogserver.dao.UserMapper;
 import com.cyb.blogserver.domain.User;
-import com.cyb.blogserver.entity.Tips;
+import com.cyb.blogserver.common.Tips;
 import com.cyb.blogserver.service.LoginServices;
 import com.cyb.blogserver.service.ParamesServices;
 import com.qq.connect.QQConnectException;
@@ -28,8 +28,6 @@ import com.qq.connect.utils.QQConnectConfig;
 @Service(value="loginServices")
 public class LoginServicesImpl implements LoginServices {
 
-	@Resource
-	private FabulousMapper fabulousMapper;
 	@Resource
 	private UserMapper userMapper;
 	@Resource
