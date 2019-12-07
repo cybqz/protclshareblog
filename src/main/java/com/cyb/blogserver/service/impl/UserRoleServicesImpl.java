@@ -2,7 +2,6 @@ package com.cyb.blogserver.service.impl;
 
 import com.cyb.blogserver.dao.UserRoleMapper;
 import com.cyb.blogserver.domain.UserRole;
-import com.cyb.blogserver.domain.UserRoleExample;
 import com.cyb.blogserver.service.UserRoleServices;
 import java.util.List;
 import javax.annotation.Resource;
@@ -13,58 +12,45 @@ public class UserRoleServicesImpl implements UserRoleServices {
 
 	@Resource
 	private UserRoleMapper userRoleMapper;
-	
-	public long countByExample(UserRoleExample example) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
-	public int deleteByExample(UserRoleExample example) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
+	@Override
 	public int deleteByPrimaryKey(String id) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
+	@Override
 	public int insert(UserRole record) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
+	@Override
 	public int insertSelective(UserRole record) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	public List<UserRole> selectByExample(UserRoleExample example) {
-		return userRoleMapper.selectByExample(example);
-	}
-
+	@Override
 	public UserRole selectByPrimaryKey(String id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public int updateByExampleSelective(UserRole record, UserRoleExample example) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public int updateByExample(UserRole record, UserRoleExample example) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
+	@Override
 	public int updateByPrimaryKeySelective(UserRole record) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
+	@Override
 	public int updateByPrimaryKey(UserRole record) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public List<UserRole> selectByUserId(String id) {
+		return null;
 	}
 }

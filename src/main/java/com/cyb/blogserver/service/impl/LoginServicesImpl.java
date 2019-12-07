@@ -6,7 +6,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import com.cyb.authority.service.CybAuthorityLoginService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -58,9 +57,9 @@ public class LoginServicesImpl implements LoginServices {
 	public void loginWithQQ(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		response.setContentType("text/html;charset=utf-8");
         try {
-        	QQConnectConfig.updateProperties("app_ID", ParamesServices.PARAMESMAP.get("QQ_APP_ID"));
-    		QQConnectConfig.updateProperties("app_KEY", ParamesServices.PARAMESMAP.get("QQ_APP_KEY"));
-    		QQConnectConfig.updateProperties("redirect_URI", ParamesServices.PARAMESMAP.get("QQ_REDIRECT_URI"));
+        	//QQConnectConfig.updateProperties("app_ID", ParamesServices.PARAMESMAP.get("QQ_APP_ID"));
+    		//QQConnectConfig.updateProperties("app_KEY", ParamesServices.PARAMESMAP.get("QQ_APP_KEY"));
+    		//QQConnectConfig.updateProperties("redirect_URI", ParamesServices.PARAMESMAP.get("QQ_REDIRECT_URI"));
             response.sendRedirect(new Oauth().getAuthorizeURL(request));
             session.setAttribute("beforLoginUrl",request.getHeader("Referer"));
         } catch (QQConnectException e) {

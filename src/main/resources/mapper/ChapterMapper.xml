@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cyb.blogserver.dao.ChapterMapper">
+  <resultMap id="BaseResultMap" type="com.cyb.blogserver.domain.Chapter">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="category" jdbcType="VARCHAR" property="category" />
+    <result column="tag" jdbcType="VARCHAR" property="tag" />
+    <result column="preface" jdbcType="VARCHAR" property="preface" />
+    <result column="img" jdbcType="VARCHAR" property="img" />
+  </resultMap>
+
+  <!-- 删除 -->
+  <delete id="deleteByTecLearningId">
+
+  </delete>
+
+  <delete id="deleteByPrimaryKey">
+
+  </delete>
+
+  <!-- 添加 -->
+  <insert id="insert" parameterMap="BaseResultMap">
+    INSERT INTO teclearning
+    VALUES (#{chapter.id}, #{chapter.title}, #{chapter.category}, #{chapter.tag}, , #{chapter.preface}, , #{chapter.img})
+  </insert>
+
+  <!-- 修改-->
+  <update id="updateByPrimaryKey">
+
+  </update>
+
+  <!-- 查询 -->
+  <select id="selectByPrimaryKey">
+
+  </select>
+  <select id="selectByTecLearningId" resultType="java.util.List">
+
+  </select>
+
+</mapper>

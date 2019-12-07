@@ -12,14 +12,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import com.cyb.blogserver.domain.User;
 import com.cyb.blogserver.domain.UserRole;
-import com.cyb.blogserver.domain.UserRoleExample;
-import com.cyb.blogserver.domain.UserRoleExample.UserRoleCriteria;
 import com.cyb.blogserver.domain.UserRolePermissionVO;
 import com.cyb.blogserver.domain.Permission;
 import com.cyb.blogserver.domain.RolePermission;
-import com.cyb.blogserver.domain.RolePermissionExample;
 import com.cyb.blogserver.domain.RolePermissionVO;
-import com.cyb.blogserver.domain.RolePermissionExample.RolePermissionCriteria;
 import com.cyb.blogserver.common.Tips;
 import com.cyb.blogserver.service.PermissionServices;
 import com.cyb.blogserver.service.RolePermissionServices;
@@ -128,11 +124,7 @@ public class UserController {
 		User user = validate.isLoginAuthenticated();
 		if(user != null) {
 			UserRolePermissionVO userRolePermissionVO = UserRolePermissionVO.toUserRolePermissionVO(user);
-			//查询当前用户角色
-			UserRoleExample userRoleExample = new UserRoleExample();
-			UserRoleCriteria userRoleCriteria =  userRoleExample.createCriteria();
-			userRoleCriteria.andUserIdEqualTo(user.getId());
-			List<UserRole> userRoles = userRoleServices.selectByExample(userRoleExample);
+			List<UserRole> userRoles = userRoleServices.selectByUserId(user.getId());
 			if(userRoles != null && userRoles.size() > 0) {
 				List<RolePermissionVO> rolePermissionVOs = new ArrayList<RolePermissionVO>();
 				for(UserRole userRole : userRoles) {
@@ -140,10 +132,7 @@ public class UserController {
 					RolePermissionVO rolePermissionVO = RolePermissionVO.toRolePermissionVO(userRole);
 					
 					//查询当前角色的权限
-					RolePermissionExample rolePermissionExample = new RolePermissionExample();
-					RolePermissionCriteria rolePermissionCriteria = rolePermissionExample.createCriteria();
-					rolePermissionCriteria.andRoleIdEqualTo(userRole.getRoleId());
-					List<RolePermission> rolePermissions = rolePermissionServices.selectByExample(rolePermissionExample);
+					List<RolePermission> rolePermissions = rolePermissionServices.selectByRoleId(userRole.getRoleId());
 					if(rolePermissions != null && rolePermissions.size() > 0) {
 						List<Permission> permissions = new ArrayList<Permission>();
 						for(RolePermission rolePermission : rolePermissions) {

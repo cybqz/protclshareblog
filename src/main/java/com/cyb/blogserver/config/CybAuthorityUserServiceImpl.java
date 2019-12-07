@@ -4,8 +4,6 @@ import com.cyb.authority.domain.CybAuthorityUser;
 import com.cyb.authority.service.CybAuthorityUserService;
 import com.cyb.blogserver.dao.UserMapper;
 import com.cyb.blogserver.domain.User;
-import com.cyb.blogserver.domain.UserExample;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -38,11 +36,7 @@ public class CybAuthorityUserServiceImpl implements CybAuthorityUserService {
     public List<CybAuthorityUser> selectByName(String name){
         logger.info("start selectByName:\t" + name);
         List<CybAuthorityUser> resultList = new ArrayList<CybAuthorityUser>();
-        UserExample userExample = new UserExample();
-        UserExample.Criteria criteria = userExample.createCriteria();
-        criteria.andUserNameEqualTo(name);
-
-        List<User> list = userMapper.selectByExample(userExample);
+        List<User> list = userMapper.selectByUserName(name);
         if(null != list && list.size() > 0){
             for(User user : list){
                 CybAuthorityUser cybAuthorityUser = new CybAuthorityUser();

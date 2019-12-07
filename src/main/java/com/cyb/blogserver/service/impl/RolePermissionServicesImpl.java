@@ -2,7 +2,6 @@ package com.cyb.blogserver.service.impl;
 
 import com.cyb.blogserver.dao.RolePermissionMapper;
 import com.cyb.blogserver.domain.RolePermission;
-import com.cyb.blogserver.domain.RolePermissionExample;
 import com.cyb.blogserver.service.RolePermissionServices;
 import java.util.List;
 
@@ -15,58 +14,45 @@ public class RolePermissionServicesImpl implements RolePermissionServices {
 
 	@Resource
 	private RolePermissionMapper rolePermissionMapper;
-	
-	public long countByExample(RolePermissionExample example) {
+
+	@Override
+    public int deleteByPrimaryKey(String id) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	public int deleteByExample(RolePermissionExample example) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public int deleteByPrimaryKey(String id) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
+	@Override
 	public int insert(RolePermission record) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
+	@Override
 	public int insertSelective(RolePermission record) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	public List<RolePermission> selectByExample(RolePermissionExample example) {
-		return rolePermissionMapper.selectByExample(example);
-	}
-
+	@Override
 	public RolePermission selectByPrimaryKey(String id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public int updateByExampleSelective(RolePermission record, RolePermissionExample example) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public int updateByExample(RolePermission record, RolePermissionExample example) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
+	@Override
 	public int updateByPrimaryKeySelective(RolePermission record) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
+	@Override
 	public int updateByPrimaryKey(RolePermission record) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public List<RolePermission> selectByRoleId(String roleId) {
+		return null;
 	}
 }

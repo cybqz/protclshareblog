@@ -8,27 +8,13 @@ import com.cyb.authority.utils.EncryptionDecrypt;
 import org.springframework.stereotype.Service;
 import com.cyb.blogserver.dao.UserMapper;
 import com.cyb.blogserver.domain.User;
-import com.cyb.blogserver.domain.UserExample;
 import com.cyb.blogserver.service.UserServices;
-import com.cyb.blogserver.utils.MyStringUtils;
 
 @Service(value="userSerivces")
 public class UserServicesImpl implements UserServices {
 	
 	@Resource
 	private UserMapper userMapper;
-
-	@Override
-	public long countByExample(UserExample example) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int deleteByExample(UserExample example) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	@Override
 	public int deleteByPrimaryKey(String id) {
@@ -58,25 +44,8 @@ public class UserServicesImpl implements UserServices {
 	}
 
 	@Override
-	public List<User> selectByExample(UserExample example) {
-		return userMapper.selectByExample(example);
-	}
-
-	@Override
 	public User selectByPrimaryKey(String id) {
 		return userMapper.selectByPrimaryKey(id);
-	}
-
-	@Override
-	public int updateByExampleSelective(User record, UserExample example) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int updateByExample(User record, UserExample example) {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 	@Override
@@ -98,5 +67,10 @@ public class UserServicesImpl implements UserServices {
 	@Override
 	public Set<String> queryPermissionByName(String userName) {
 		return userMapper.queryPermissionByName(userName);
+	}
+
+	@Override
+	public List<User> selectByUserName(String username) {
+		return null;
 	}
 }

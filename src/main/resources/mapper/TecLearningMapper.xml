@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cyb.blogserver.dao.TecLearningMapper">
+  <resultMap id="BaseResultMap" type="com.cyb.blogserver.domain.TecLearning">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="teclearning_id" jdbcType="VARCHAR" property="teclearningId" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="desc" jdbcType="VARCHAR" property="desc" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+  </resultMap>
+
+  <!-- 添加 -->
+  <insert id="insert" parameterMap="BaseResultMap">
+    INSERT INTO chapter
+    VALUES (#{chapter.id}, #{chapter.teclearning_id}, #{chapter.title}, #{chapter.desc}, #{chapter.content})
+  </insert>
+
+  <!-- 删除 -->
+  <delete id="deleteByPrimaryKey">
+
+  </delete>
+
+  <!-- 修改 -->
+  <update id="updateByPrimaryKey">
+
+  </update>
+
+  <!-- 查询 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+
+  </select>
+
+  <select id="selectByTecLearning" resultType="java.util.List">
+
+  </select>
+
+</mapper>

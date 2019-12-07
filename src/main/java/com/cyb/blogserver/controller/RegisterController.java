@@ -11,8 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.cyb.blogserver.domain.User;
-import com.cyb.blogserver.domain.UserExample;
-import com.cyb.blogserver.domain.UserExample.Criteria;
 import com.cyb.blogserver.common.Tips;
 import com.cyb.blogserver.service.UserServices;
 
@@ -33,10 +31,7 @@ public class RegisterController {
 			if(StringUtils.isNotBlank(username) && StringUtils.isNotBlank(user.getPassword()) &&
 			   (sex == 0 || sex == 1)) {
 				//检查用户名是否存在
-				UserExample example = new UserExample();
-				Criteria criteria = example.createCriteria();
-				criteria.andUserNameEqualTo(username);
-				List<User> users = userSerivces.selectByExample(example);
+				List<User> users = userSerivces.selectByUserName(username);
 				if(users != null && users.size() > 0) {
 					tips.setMsg("用户已存在！");
 				}else {

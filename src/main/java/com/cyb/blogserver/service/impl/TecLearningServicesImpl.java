@@ -1,0 +1,41 @@
+package com.cyb.blogserver.service.impl;
+
+import com.cyb.blogserver.common.Pagenation;
+import com.cyb.blogserver.dao.TecLearningMapper;
+import com.cyb.blogserver.domain.TecLearning;
+import com.cyb.blogserver.service.TecLearningServices;
+import org.springframework.stereotype.Service;
+import javax.annotation.Resource;
+import java.util.List;
+
+@Service(value="tecLearningServices")
+public class TecLearningServicesImpl implements TecLearningServices {
+	
+	@Resource
+	private TecLearningMapper tecLearningMapper;
+
+	@Override
+	public int deleteByPrimaryKey(String id) {
+		return tecLearningMapper.deleteByPrimaryKey(id);
+	}
+
+	@Override
+	public int insert(TecLearning tecLearning) {
+		return tecLearningMapper.insert(tecLearning);
+	}
+
+	@Override
+	public TecLearning selectByPrimaryKey(String id) {
+		return tecLearningMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public int updateByPrimaryKey(TecLearning tecLearning) {
+		return tecLearningMapper.updateByPrimaryKey(tecLearning);
+	}
+
+	@Override
+	public List<TecLearning> selectByTecLearning(TecLearning tecLearning, Pagenation pagenation) {
+		return null;
+	}
+}
