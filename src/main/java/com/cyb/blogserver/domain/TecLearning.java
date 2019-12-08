@@ -1,5 +1,7 @@
 package com.cyb.blogserver.domain;
 
+import java.util.List;
+
 /**
  * 技术学习
  */
@@ -34,6 +36,11 @@ public class TecLearning {
      * 图片
      */
     private String img;
+
+    /**
+     * 章节集合
+     */
+    private List<Chapter> chapterList;
 
     public String getId() {
         return id;
@@ -81,5 +88,13 @@ public class TecLearning {
 
     public void setImg(String img) {
         this.img = img;
+    }
+
+    public List<Chapter> getChapterList() {
+        return chapterList;
+    }
+
+    public void setChapterList(List<Chapter> chapterList) {
+        this.chapterList = chapterList;
     }
 }

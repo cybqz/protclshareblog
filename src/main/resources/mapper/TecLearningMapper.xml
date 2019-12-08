@@ -3,16 +3,26 @@
 <mapper namespace="com.cyb.blogserver.dao.TecLearningMapper">
   <resultMap id="BaseResultMap" type="com.cyb.blogserver.domain.TecLearning">
     <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="teclearning_id" jdbcType="VARCHAR" property="teclearningId" />
     <result column="title" jdbcType="VARCHAR" property="title" />
-    <result column="desc" jdbcType="VARCHAR" property="desc" />
-    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="category" jdbcType="VARCHAR" property="category" />
+    <result column="tag" jdbcType="VARCHAR" property="tag" />
+    <result column="preface" jdbcType="VARCHAR" property="preface" />
+    <result column="img" jdbcType="VARCHAR" property="img" />
+
+    <collection property="chapterList" ofType="com.cyb.blogserver.domain.Chapter" column="teclearning_id">
+      <id column="id" jdbcType="VARCHAR" property="id" />
+      <result column="teclearning_id" jdbcType="VARCHAR" property="teclearningId" />
+      <result column="title" jdbcType="VARCHAR" property="title" />
+      <result column="desc" jdbcType="VARCHAR" property="desc" />
+      <result column="content" jdbcType="VARCHAR" property="content" />
+      <result column="img" jdbcType="VARCHAR" property="img" />
+    </collection>
   </resultMap>
 
   <!-- 添加 -->
   <insert id="insert" parameterMap="BaseResultMap">
-    INSERT INTO chapter
-    VALUES (#{chapter.id}, #{chapter.teclearning_id}, #{chapter.title}, #{chapter.desc}, #{chapter.content})
+    INSERT INTO teclearning
+    VALUES (#{chapter.id}, #{chapter.title}, #{chapter.category}, #{chapter.tag}, , #{chapter.preface}, , #{chapter.img})
   </insert>
 
   <!-- 删除 -->
@@ -31,7 +41,9 @@
   </select>
 
   <select id="selectByTecLearning" resultType="java.util.List">
-
+    SELECT t.*, c.*
+    FROM teclearning t, chapter c
+    WHERE t.id = c.teclearning_id
   </select>
 
 </mapper>

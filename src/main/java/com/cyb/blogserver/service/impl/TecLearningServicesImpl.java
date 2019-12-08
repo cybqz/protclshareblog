@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
 
+/**
+ * 技术学习博客接口实现类
+ */
 @Service(value="tecLearningServices")
 public class TecLearningServicesImpl implements TecLearningServices {
 	
@@ -20,9 +23,7 @@ public class TecLearningServicesImpl implements TecLearningServices {
 	}
 
 	@Override
-	public int insert(TecLearning tecLearning) {
-		return tecLearningMapper.insert(tecLearning);
-	}
+	public int insert(TecLearning tecLearning) { return tecLearningMapper.insert(tecLearning); }
 
 	@Override
 	public TecLearning selectByPrimaryKey(String id) {
