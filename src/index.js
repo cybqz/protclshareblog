@@ -7,6 +7,7 @@ import VueResource from 'vue-resource';
 import router from './router';
 import store from './store';
 import axios from 'axios';
+import qs from 'qs'
 
 import VueAnime from 'vue-animejs';
 
@@ -15,6 +16,8 @@ import 'iview/dist/styles/iview.css';
 
 
 Vue.prototype.$axios = axios;
+Vue.prototype.$qs = qs;
+
 Vue.config.productionTip = false;
 Vue.use(VueResource);
 Vue.use(VueRouter);
@@ -33,7 +36,7 @@ Vue.use(Vuex);
 // axios 配置
 axios.defaults.timeout = 5000
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
-axios.defaults.baseURL = 'http://127.0.0.1:8088/'
+axios.defaults.baseURL = 'http://127.0.0.1:9090/'
  
 const root = document.createElement('div')
 root.id = 'app'

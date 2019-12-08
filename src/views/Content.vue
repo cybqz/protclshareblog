@@ -61,10 +61,25 @@
                         </div>
                     </Upload>
                 </FormItem>
+                <FormItem id="chapter" label-position="top">
+                    <Collapse simple v-for="(item, index) in blog.chapterList" :key="index" >
+                        <Panel name="index">
+                            {{item.title}}
+                            <div slot="content">
+                                <div>
+                                    {{item.desc}}
+                                </div>
+                                <div>
+                                    {{item.content}}
+                                </div>
+                            </div>
+                        </Panel>
+                    </Collapse>
+                </FormItem>
             </Form>
             <div class="demo-drawer-footer">
                 <Button style="margin-right: 8px" @click="blogDrawer.isShow = false">取消</Button>
-                <Button type="primary" @click="blogDrawer.isShow = false">添加</Button>
+                <Button type="primary" @click="addBlog">添加</Button>
                 <Button id="btn-chapter-drawer" @click="changeShowChapterDrawer" type="primary">添加章节</Button>
             </div>
         </Drawer>
@@ -86,7 +101,7 @@
                     </Col>
                 </Row>
                 <FormItem label="描述" label-position="top">
-                    <Input type="textarea" v-model="blogChapter.content" :rows="4" placeholder="请输入描述" />
+                    <Input type="textarea" v-model="blogChapter.desc" :rows="4" placeholder="请输入描述" />
                 </FormItem>
                 
                 <div id="editor">
@@ -97,33 +112,43 @@
             <div class="demo-drawer-footer">
                 <Button style="margin-right: 8px" @click="chapterDrawer.isShow = false">取消</Button>
                 <Button type="primary" @click="addChapter">添加</Button>
+                <Button type="primary" @click="addChapterContinue">继续添加</Button>
             </div>
         </Drawer>  
         <router-view></router-view>   
     </div>
 </template>
 <script>
-import {mapMutations, mapGetters, mapState} from 'vuex'  // 引入map方法
+import {mapMutations, mapGetters, mapState} from 'vuex'
+import {isEmptyMap} from '@/Utils/Utils'
 import WangEditor from 'wangeditor'
 export default {
     data(){
         return {
+                AddChapterResult: false,
+                isInitWangEditor: true,
                 editor: null,
-                editorContent: null,
                 query:{a: '', b:''},
                 richContent: null,
                 blog: {
-                    title: '',
-                    author: '',
-                    category: '',
-                    tag: '',
-                    preface: '',
-                    chapter: []
+                    title: 'title',
+                    author: 'author',
+                    category: 'category',
+                    tag: 'tag',
+                    preface: 'preface',
+                    chapterList: [
+                        {
+                            title: 'qqqqqqqq',
+                            desc: 'desc',
+                            content: 'dddssssssd',
+                            img: 'aaaaa'
+                        }
+                    ]
                 },
                 blogChapter: {
                     title: '',
-                    content: '',
-                    code: ''
+                    desc: '',
+                    img: ''
                 },
                 blogDrawer: {
                     isShow: false,
@@ -188,9 +213,12 @@ export default {
         //显示C
         changeShowChapterDrawer: function(){
             this.chapterDrawer.isShow = true;
-            this.$nextTick(function(){
-                this.initWangEditor();
-            });
+            if(this.isInitWangEditor){
+                this.$nextTick(function(){
+                    this.initWangEditor();
+                    this.isInitWangEditor = false;
+                });
+            }
         },
 
         //图片上传成功处理
@@ -198,10 +226,64 @@ export default {
 
         },
 
+        //添加blog
+        addBlog: function(){
+            let blog = {chapterList: ''}
+            for(let i in this.blog){
+                if(i != 'chapterList'){
+                    blog[i] = this.blog[i]
+                }
+            }
+            let params = this.$qs.stringify({
+                    tecLearning: blog,
+                    chapterList: this.$qs.stringify(this.blog.chapterList)
+                },{ indices: false });
+            console.log(params)
+            this.$axios.post('tecLearning/add',
+                             params
+                ).then(res => {                   //请求成功后的处理函数     
+                    console.log(res);   
+                }).catch(err => {                 //请求失败后的处理函数   
+                    console.log(err);
+                })
+            //this.blogDrawer.isShow = false;
+        },
+
         //添加章节
         addChapter: function(){
-            this.editorContent = this.editor.txt.html();
-            console.log(this.editorContent);
+            this.excuteAddChapter();
+            this.chapterDrawer.isShow = this.AddChapterResult;
+        },
+        //继续添加章节
+        addChapterContinue: function(){
+            this.excuteAddChapter();
+        },
+
+        //执行添加章节操作
+        excuteAddChapter(){
+            let chaptermap = {
+                title: this.blogChapter.title,
+                desc: this.blogChapter.desc,
+                content: this.editor.txt.html()
+            }
+
+            //非空判断
+            if(!isEmptyMap(chaptermap,['title','content'])){
+
+                //标题重复检测
+                for(let i in this.blog.chapterList){
+
+                    if(this.blog.chapterList[i].title === chaptermap['title']){
+                        this.$Message.warning('章节标题不能重复');
+                        this.AddChapterResult = false;
+                    }
+                }
+                this.blog.chapterList.push(chaptermap)
+                this.blogChapter = {}
+                this.editor.txt.html('')
+                this.AddChapterResult = true;
+            }
+            this.AddChapterResult = false;
         },
 
         //初始化WangEditor
@@ -267,7 +349,6 @@ export default {
         }
     },
     created(){
-        this.test();
     },
     mounted(){
     },
