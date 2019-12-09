@@ -138,10 +138,10 @@ export default {
                     preface: 'preface',
                     chapterList: [
                         {
-                            title: 'qqqqqqqq',
+                            title: 'title',
                             desc: 'desc',
-                            content: 'dddssssssd',
-                            img: 'aaaaa'
+                            content: 'content',
+                            img: 'img'
                         }
                     ]
                 },
@@ -228,21 +228,10 @@ export default {
 
         //添加blog
         addBlog: function(){
-            let blog = {chapterList: ''}
-            for(let i in this.blog){
-                if(i != 'chapterList'){
-                    blog[i] = this.blog[i]
-                }
-            }
-            let params = this.$qs.stringify({
-                    tecLearning: blog,
-                    chapterList: this.$qs.stringify(this.blog.chapterList)
-                },{ indices: false });
-            console.log(params)
             this.$axios.post('tecLearning/add',
-                             params
+                    this.$qs.stringify(this.blog, {arrayFormat: 'indices', allowDots: true})
                 ).then(res => {                   //请求成功后的处理函数     
-                    console.log(res);   
+                    console.log(res.data.msg);   
                 }).catch(err => {                 //请求失败后的处理函数   
                     console.log(err);
                 })
