@@ -1,5 +1,6 @@
 package com.cyb.blogserver.controller;
 
+import com.cyb.blogserver.common.Pagenation;
 import com.cyb.blogserver.common.Tips;
 import com.cyb.blogserver.domain.Chapter;
 import com.cyb.blogserver.domain.TecLearning;
@@ -28,27 +29,43 @@ public class TecLearningController {
 	@Autowired
 	private ChapterServices chapterServices;
 
+	/**
+	 * 添加技术学习博客
+	 * @param tecLearning
+	 * @return
+	 */
 	@RequestMapping(value="/add")
 	@ResponseBody
-	public Tips add (TecLearning tecLearning, String chapterList) {
+	public Tips add (TecLearning tecLearning) {
 		Tips tips = new Tips("添加技术学习博客失败", true, false);
 		if(null != tecLearning.getTitle()){
 			tips.setMsg(tecLearning.getTitle());
 		}
-//		String teclearningID = MyStringUtils.getPrimaryKey();
-//		tecLearning.setId(teclearningID);
-//		int count = tecLearningServices.insert(tecLearning);
-//		if(count > 0){
-//			//List<Chapter> chapterList = tecLearning.getChapterList();
-//			if(null != chapterList && chapterList.size() > 0){
-//
-//				for(Chapter chapter : chapterList){
-//					chapter.setTeclearningId(teclearningID);
-//					chapter.setId(MyStringUtils.getPrimaryKey());
-//					chapterServices.insert(chapter);
-//				}
-//			}
-//		}
+		String teclearningID = MyStringUtils.getPrimaryKey();
+		tecLearning.setId(teclearningID);
+		int count = tecLearningServices.insert(tecLearning);
+		if(count > 0){
+			List<Chapter> chapterList = tecLearning.getChapterList();
+			if(null != chapterList && chapterList.size() > 0){
+
+				for(Chapter chapter : chapterList){
+					chapter.setTeclearningId(teclearningID);
+					chapter.setId(MyStringUtils.getPrimaryKey());
+					chapterServices.insert(chapter);
+				}
+			}
+		}
 		return tips;
+	}
+
+	/**
+	 * 查询技术学习博客
+	 * @param tecLearning
+	 * @param pagenation
+	 */
+	@RequestMapping(value="/selectByTecLearning")
+	@ResponseBody
+	public void selectByTecLearning(TecLearning tecLearning, Pagenation pagenation){
+		tecLearningServices.selectByTecLearning(tecLearning, pagenation);
 	}
 }

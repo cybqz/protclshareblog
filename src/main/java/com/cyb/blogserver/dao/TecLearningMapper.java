@@ -1,7 +1,6 @@
 package com.cyb.blogserver.dao;
 
 import com.cyb.blogserver.common.Pagenation;
-import com.cyb.blogserver.domain.Chapter;
 import com.cyb.blogserver.domain.TecLearning;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -13,7 +12,7 @@ public interface TecLearningMapper {
 
     int deleteByPrimaryKey(@Param("id") String id);
 
-    int insert(@Param("tecLearning")TecLearning tecLearning);
+    int insert(TecLearning tecLearning);
 
     TecLearning selectByPrimaryKey(@Param("id") String id);
 

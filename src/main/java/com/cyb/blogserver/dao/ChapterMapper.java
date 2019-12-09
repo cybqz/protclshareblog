@@ -12,7 +12,7 @@ public interface ChapterMapper {
 
     int deleteByPrimaryKey(@Param("id") String id);
 
-    int insert(@Param("chapter") Chapter chapter);
+    int insert(Chapter chapter);
 
     List<Chapter> selectByTecLearningId(@Param("tecLearningId") String tecLearningId);
 

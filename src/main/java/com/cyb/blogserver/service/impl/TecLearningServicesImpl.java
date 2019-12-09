@@ -37,6 +37,6 @@ public class TecLearningServicesImpl implements TecLearningServices {
 
 	@Override
 	public List<TecLearning> selectByTecLearning(TecLearning tecLearning, Pagenation pagenation) {
-		return null;
+		return tecLearningMapper.selectByTecLearning(tecLearning, pagenation);
 	}
 }

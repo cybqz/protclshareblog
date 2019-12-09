@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cyb.blogserver.dao.TecLearningMapper">
-  <resultMap id="BaseResultMap" type="com.cyb.blogserver.domain.TecLearning">
+  <resultMap id="tecLearningMap" type="com.cyb.blogserver.domain.TecLearning">
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="category" jdbcType="VARCHAR" property="category" />
@@ -20,9 +20,9 @@
   </resultMap>
 
   <!-- 添加 -->
-  <insert id="insert" parameterMap="BaseResultMap">
+  <insert id="insert" parameterType="com.cyb.blogserver.domain.TecLearning">
     INSERT INTO teclearning
-    VALUES (#{chapter.id}, #{chapter.title}, #{chapter.category}, #{chapter.tag}, , #{chapter.preface}, , #{chapter.img})
+    VALUES (#{id}, #{title}, #{category}, #{tag}, #{preface}, #{img})
   </insert>
 
   <!-- 删除 -->
@@ -36,7 +36,7 @@
   </update>
 
   <!-- 查询 -->
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" resultMap="tecLearningMap">
 
   </select>
 
