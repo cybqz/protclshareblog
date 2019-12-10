@@ -2,12 +2,24 @@ package com.cyb.blogserver.common;
 
 public class Tips {
 
+	/**
+	 * 消息
+	 */
 	private String msg;
-	
+
+	/**
+	 * 页面是否提示
+	 */
 	private boolean show = true;
-	
+
+	/**
+	 * 验证结果
+	 */
 	private boolean validate;
-	
+
+	/**
+	 * 返回数据
+	 */
 	private Object data;
 	
 	public Tips(String msg, boolean validate) {

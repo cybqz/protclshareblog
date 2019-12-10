@@ -1,5 +1,6 @@
 package com.cyb.blogserver.domain;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -36,6 +37,11 @@ public class TecLearning {
      * 图片
      */
     private String img;
+
+    /**
+     * 创建日期
+     */
+    private Date createDate;
 
     /**
      * 章节集合
@@ -88,6 +94,14 @@ public class TecLearning {
 
     public void setImg(String img) {
         this.img = img;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 
     public List<Chapter> getChapterList() {

@@ -36,6 +36,11 @@ public class TecLearningServicesImpl implements TecLearningServices {
 	}
 
 	@Override
+	public TecLearning selectOneByTecLearning(TecLearning tecLearning){
+		return tecLearningMapper.selectOneByTecLearning(tecLearning);
+	}
+
+	@Override
 	public List<TecLearning> selectByTecLearning(TecLearning tecLearning, Pagenation pagenation) {
 		return tecLearningMapper.selectByTecLearning(tecLearning, pagenation);
 	}

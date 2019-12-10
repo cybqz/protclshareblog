@@ -16,7 +16,9 @@ public interface TecLearningMapper {
 
     TecLearning selectByPrimaryKey(@Param("id") String id);
 
-    int updateByPrimaryKey(@Param("tecLearning") TecLearning tecLearning);
+    int updateByPrimaryKey(TecLearning tecLearning);
+
+    TecLearning selectOneByTecLearning(TecLearning tecLearning);
 
     List<TecLearning> selectByTecLearning(@Param("tecLearning") TecLearning tecLearning, @Param("pagenation") Pagenation pagenation);
 }

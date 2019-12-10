@@ -15,5 +15,7 @@ public interface TecLearningServices {
 
     int updateByPrimaryKey(TecLearning tecLearning);
 
+    TecLearning selectOneByTecLearning(TecLearning tecLearning);
+
     List<TecLearning> selectByTecLearning(TecLearning tecLearning, Pagenation pagenation);
 }

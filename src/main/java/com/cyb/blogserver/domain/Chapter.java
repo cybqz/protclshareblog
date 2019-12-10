@@ -1,5 +1,7 @@
 package com.cyb.blogserver.domain;
 
+import java.util.Date;
+
 /**
  * 章节
  */
@@ -23,7 +25,7 @@ public class Chapter {
     /**
      * 描述
      */
-    private String desc;
+    private String description;
 
     /**
      * 内容
@@ -34,6 +36,11 @@ public class Chapter {
      * 图片
      */
     private String img;
+
+    /**
+     * 创建日期
+     */
+    private Date createDate;
 
     public String getId() {
         return id;
@@ -59,12 +66,12 @@ public class Chapter {
         this.title = title;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getContent() {
@@ -81,5 +88,13 @@ public class Chapter {
 
     public void setImg(String img) {
         this.img = img;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 }

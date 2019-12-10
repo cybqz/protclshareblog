@@ -5,9 +5,10 @@
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="teclearning_id" jdbcType="VARCHAR" property="teclearningId" />
     <result column="title" jdbcType="VARCHAR" property="title" />
-    <result column="desc" jdbcType="VARCHAR" property="desc" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="img" jdbcType="VARCHAR" property="img" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
   </resultMap>
 
   <!-- 删除 -->
@@ -22,7 +23,8 @@
   <!-- 添加 -->
   <insert id="insert" parameterType="com.cyb.blogserver.domain.Chapter">
     INSERT INTO chapter
-    VALUES (#{id}, #{teclearningId}, #{title}, #{desc}, #{content}, #{img})
+    (id, teclearning_id, title, description, content, img, create_date)
+    VALUES (#{id}, #{teclearningId}, #{title}, #{description}, #{content}, #{img}, #{createDate})
   </insert>
 
   <!-- 修改-->

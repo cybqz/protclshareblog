@@ -8,6 +8,7 @@
     <result column="tag" jdbcType="VARCHAR" property="tag" />
     <result column="preface" jdbcType="VARCHAR" property="preface" />
     <result column="img" jdbcType="VARCHAR" property="img" />
+    <result column="create_date" jdbcType="DATE" property="createDate" />
 
     <collection property="chapterList" ofType="com.cyb.blogserver.domain.Chapter" column="teclearning_id">
       <id column="id" jdbcType="VARCHAR" property="id" />
@@ -16,13 +17,15 @@
       <result column="desc" jdbcType="VARCHAR" property="desc" />
       <result column="content" jdbcType="VARCHAR" property="content" />
       <result column="img" jdbcType="VARCHAR" property="img" />
+      <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
     </collection>
   </resultMap>
 
   <!-- 添加 -->
   <insert id="insert" parameterType="com.cyb.blogserver.domain.TecLearning">
     INSERT INTO teclearning
-    VALUES (#{id}, #{title}, #{category}, #{tag}, #{preface}, #{img})
+    (id, title, category, tag, preface, img, create_date)
+    VALUES (#{id}, #{title}, #{category}, #{tag}, #{preface}, #{img}, #{createDate})
   </insert>
 
   <!-- 删除 -->
@@ -37,13 +40,29 @@
 
   <!-- 查询 -->
   <select id="selectByPrimaryKey" resultMap="tecLearningMap">
-
+    SELECT * FROM teclearning WHERE id = #{id}
   </select>
 
-  <select id="selectByTecLearning" resultType="java.util.List">
+  <select id="selectOneByTecLearning" resultMap="tecLearningMap">
+    SELECT *
+    FROM teclearning
+    <where>
+      <if test="title != null and title !=''">
+        AND title = #{title}
+      </if>
+      <if test="category != null and category !=''">
+        AND category = #{category}
+      </if>
+      <if test="tag != null and tag !=''">
+        AND tag = #{tag}
+      </if>
+    </where>
+  </select>
+
+  <select id="selectByTecLearning" resultMap="tecLearningMap">
     SELECT t.*, c.*
-    FROM teclearning t, chapter c
-    WHERE t.id = c.teclearning_id
+    FROM teclearning t
+    LEFT JOIN chapter c ON t.id = c.teclearning_id
   </select>
 
 </mapper>

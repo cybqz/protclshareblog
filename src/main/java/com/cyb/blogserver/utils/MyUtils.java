@@ -1,13 +1,14 @@
 package com.cyb.blogserver.utils;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.crypto.hash.SimpleHash;
 
-public class MyStringUtils {
+public class MyUtils {
 	
 	public static String formatDate(String format, Date date) {
 		
@@ -27,5 +28,10 @@ public class MyStringUtils {
 	 */
 	public static String getPrimaryKey(){
 		return UUID.randomUUID().toString();
+	}
+
+	public static LocalDate getLocalDate(){
+
+		return LocalDate.now();
 	}
 }
