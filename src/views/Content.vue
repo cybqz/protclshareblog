@@ -67,7 +67,7 @@
                             {{item.title}}
                             <div slot="content">
                                 <div>
-                                    {{item.desc}}
+                                    {{item.description}}
                                 </div>
                                 <div>
                                     {{item.content}}
@@ -101,7 +101,7 @@
                     </Col>
                 </Row>
                 <FormItem label="描述" label-position="top">
-                    <Input type="textarea" v-model="blogChapter.desc" :rows="4" placeholder="请输入描述" />
+                    <Input type="textarea" v-model="blogChapter.description" :rows="4" placeholder="请输入描述" />
                 </FormItem>
                 
                 <div id="editor">
@@ -136,18 +136,11 @@ export default {
                     category: 'category',
                     tag: 'tag',
                     preface: 'preface',
-                    chapterList: [
-                        {
-                            title: 'title',
-                            desc: 'desc',
-                            content: 'content',
-                            img: 'img'
-                        }
-                    ]
+                    chapterList: []
                 },
                 blogChapter: {
                     title: '',
-                    desc: '',
+                    description: '',
                     img: ''
                 },
                 blogDrawer: {
@@ -231,7 +224,8 @@ export default {
             this.$axios.post('tecLearning/add',
                     this.$qs.stringify(this.blog, {arrayFormat: 'indices', allowDots: true})
                 ).then(res => {                   //请求成功后的处理函数     
-                    console.log(res.data.msg);   
+                    console.log(res.data);
+                    this.message(res.data);
                 }).catch(err => {                 //请求失败后的处理函数   
                     console.log(err);
                 })
@@ -252,7 +246,7 @@ export default {
         excuteAddChapter(){
             let chaptermap = {
                 title: this.blogChapter.title,
-                desc: this.blogChapter.desc,
+                description: this.blogChapter.description,
                 content: this.editor.txt.html()
             }
 
@@ -268,7 +262,7 @@ export default {
                     }
                 }
                 this.blog.chapterList.push(chaptermap)
-                this.blogChapter = {}
+                //this.blogChapter = {}
                 this.editor.txt.html('')
                 this.AddChapterResult = true;
             }
@@ -335,7 +329,16 @@ export default {
             }
             // 创建富文本编辑器
             this.editor.create()
-        }
+        },
+        message: function(data){
+            if(data.show){
+                if(data.validate){
+                    this.$Message.success(data.msg);
+                }else{
+                    this.$Message.error(data.msg);
+                }
+            }
+        },
     },
     created(){
     },
