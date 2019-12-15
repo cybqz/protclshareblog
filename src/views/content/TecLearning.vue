@@ -28,12 +28,23 @@
             </div>
             <Button type="primary" shape="circle" icon="md-eye" @click="readAll(index)">阅读全部</Button>
             <div :id="'content-'+index" class="content" v-show="item.status" :ref="'content-'+index">
-                {{item.content}}
+                <Collapse simple v-for="(chapter, chapterIndex) in item.chapterList" :key="chapterIndex">
+                    <Panel name="index">
+                        {{chapter.title}}
+                        <div slot="content">
+                            <div>
+                                {{chapter.description}}
+                            </div>
+                            <div v-html="chapter.content"></div>
+                        </div>
+                    </Panel>
+                </Collapse>
             </div>
         </div>
     </div>
 </template>
 <script>
+import {isEmptyStr} from '@/Utils/Utils'
 export default {
   name: 'TecLearning',
   data () {
@@ -43,17 +54,25 @@ export default {
     }
   },
   methods:{
-        test: function(){
-            // this.$axios.get('yjdwyjqxjl/qxdjpage',{
-            //     params: {                           //参数
-            //         current: 1,
-            //         size: 10,
-            //     },
-            //     }).then(res => {                   //请求成功后的处理函数     
-            //         console.log(res);   
-            //     }).catch(err => {                 //请求失败后的处理函数   
-            //         console.log(err);
-            //     })
+        getList: function(){
+            this.$axios.post('tecLearning/selectByTecLearning',{
+                params: {                           //参数
+                    current: 1,
+                    size: 10,
+                },
+                }).then(res => {                   //请求成功后的处理函数     
+                    console.log(res);
+                    let data = res.data.data;
+                    this.blogList = [];
+                    for(let i in data){
+                        this.blogList.push(data[i]);
+                    }
+                    for(let i in this.blogList){
+                        this.$set(this.blogList[i],'status',false);
+                    }
+                }).catch(err => {                 //请求失败后的处理函数   
+                    console.log(err);
+                })
         },
 
         //阅读全部
@@ -76,13 +95,11 @@ export default {
                     complete: function(anim) {
                         _this.$set(_this.blogList[index],'status',false);
                         //console.log('close  '+containerTgt[0].offsetHeight);
-                        console.log('close  '+contentTgt[0].offsetHeight);
                     }
                 });
             }else{  //打开动画
                 _this.$set(_this.blogList[index],'status',true);
-                //console.log('open  '+containerTgt[0].offsetHeight);
-                console.log('open  '+ contentTgt[0].offsetHeight);     
+                //console.log('open  '+containerTgt[0].offsetHeight);  
                 _this.$anime({
                     targets: contentTgt,
                     translateY: 10,
@@ -96,22 +113,15 @@ export default {
 
         //加载图片
         getImageUrl: function(img){
+            if(isEmptyStr(img)){
+                return null;
+            }
             return require("@/assets/images/"+img+".png");
         }
     },
-    created(){
-        this.test();
-    },
+    created(){},
     mounted(){
-        for(let i = 0; i < 2; i++){
-            this.blogList.push({title: 'VUE', author: '张三', category: '技术框架1', tag: '雪花算法', date: '2019-11-11',
-            img: 'profile',
-            sketch: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-            content: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'});
-        }
-        for(let i in this.blogList){
-            this.$set(this.blogList[i],'status',false);
-        }
+        this.getList();
     }
 }
 </script>

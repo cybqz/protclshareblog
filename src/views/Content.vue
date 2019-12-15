@@ -62,16 +62,14 @@
                     </Upload>
                 </FormItem>
                 <FormItem id="chapter" label-position="top">
-                    <Collapse simple v-for="(item, index) in blog.chapterList" :key="index" >
+                    <Collapse simple v-for="(item, index) in blog.chapterList" :key="index">
                         <Panel name="index">
                             {{item.title}}
                             <div slot="content">
                                 <div>
                                     {{item.description}}
                                 </div>
-                                <div>
-                                    {{item.content}}
-                                </div>
+                                <div v-html="item.content"></div>
                             </div>
                         </Panel>
                     </Collapse>
