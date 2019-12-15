@@ -6,7 +6,7 @@ import com.cyb.blogserver.domain.TecLearning;
 import com.cyb.blogserver.service.TecLearningServices;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
-import java.util.List;
+import java.util.*;
 
 /**
  * 技术学习博客接口实现类
@@ -42,6 +42,25 @@ public class TecLearningServicesImpl implements TecLearningServices {
 
 	@Override
 	public List<TecLearning> selectByTecLearning(TecLearning tecLearning, Pagenation pagenation) {
-		return tecLearningMapper.selectByTecLearning(tecLearning, pagenation);
+		List<TecLearning> resultList = null;
+		Map<String, TecLearning> map = new HashMap<String, TecLearning>();
+		List<TecLearning> list = tecLearningMapper.selectByTecLearning(tecLearning, pagenation);
+		if(null != list && list.size() > 0){
+			resultList = new ArrayList<TecLearning>();
+			for(TecLearning t : list){
+				if(map.containsKey(t.getId())){
+					TecLearning mt = map.get(t.getId());
+					mt.getChapterList().add(t.getChapterList().get(0));
+					map.put(t.getId(), mt);
+				}else{
+					map.put(t.getId(), t);
+				}
+			}
+			Iterator<TecLearning> ite =  map.values().iterator();
+			while (ite.hasNext()){
+				resultList.add(ite.next());
+			}
+		}
+		return resultList;
 	}
 }

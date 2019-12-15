@@ -44,7 +44,7 @@ public class TecLearningController {
 		TecLearning tecLearningParam = new TecLearning();
 		tecLearningParam.setTitle(tecLearning.getTitle());
 		TecLearning tecLearningTemp = tecLearningServices.selectOneByTecLearning(tecLearningParam);
-		if(tecLearningTemp != null){
+		if(tecLearningTemp == null){
 			int count = tecLearningServices.insert(tecLearning);
 			if(count > 0){
 				List<Chapter> chapterList = tecLearning.getChapterList();
