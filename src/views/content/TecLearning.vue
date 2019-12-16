@@ -19,7 +19,7 @@
                 </span>
                 <span class="article-date">
                     <Icon type="md-timer" />
-                    <span>{{item.date}}</span>
+                    <span>{{dateFormat(item.createDate)}}</span>
                 </span>    
             </div>
             <img class="titleimg" :src="getImageUrl(item.img)"/>
@@ -44,7 +44,7 @@
     </div>
 </template>
 <script>
-import {isEmptyStr} from '@/Utils/Utils'
+import {isEmptyStr, dateFormat} from '@/Utils/Utils'
 export default {
   name: 'TecLearning',
   data () {
@@ -54,6 +54,7 @@ export default {
     }
   },
   methods:{
+        //加载技术学习博客列表
         getList: function(){
             this.$axios.post('tecLearning/selectByTecLearning',{
                 params: {                           //参数
@@ -117,6 +118,11 @@ export default {
                 return null;
             }
             return require("@/assets/images/"+img+".png");
+        },
+
+        //格式化时间
+        dateFormat: function(time){
+            return dateFormat(time);
         }
     },
     created(){},

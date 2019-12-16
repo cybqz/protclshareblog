@@ -129,11 +129,11 @@ export default {
                 query:{a: '', b:''},
                 richContent: null,
                 blog: {
-                    title: 'title',
+                    title: '',
                     author: 'author',
-                    category: 'category',
-                    tag: 'tag',
-                    preface: 'preface',
+                    category: '',
+                    tag: '',
+                    preface: '',
                     chapterList: []
                 },
                 blogChapter: {
@@ -250,19 +250,22 @@ export default {
 
             //非空判断
             if(!isEmptyMap(chaptermap,['title','content'])){
-
+                let check = true;
                 //标题重复检测
                 for(let i in this.blog.chapterList){
 
                     if(this.blog.chapterList[i].title === chaptermap['title']){
                         this.$Message.warning('章节标题不能重复');
                         this.AddChapterResult = false;
+                        check = false;
                     }
                 }
-                this.blog.chapterList.push(chaptermap)
-                //this.blogChapter = {}
-                this.editor.txt.html('')
-                this.AddChapterResult = true;
+                if(check){
+                    this.blog.chapterList.push(chaptermap)
+                    this.blogChapter = {};
+                    this.editor.txt.html('');
+                    this.AddChapterResult = true;
+                }
             }
             this.AddChapterResult = false;
         },
