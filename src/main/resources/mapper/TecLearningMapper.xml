@@ -2,29 +2,29 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cyb.blogserver.dao.TecLearningMapper">
   <resultMap id="tecLearningMap" type="com.cyb.blogserver.domain.TecLearning">
-    <id column="tid" jdbcType="VARCHAR" property="id" />
-    <result column="title" jdbcType="VARCHAR" property="title" />
+    <id column="teclearning_id" jdbcType="VARCHAR" property="id" />
+    <result column="teclearning_title" jdbcType="VARCHAR" property="title" />
     <result column="category" jdbcType="VARCHAR" property="category" />
     <result column="tag" jdbcType="VARCHAR" property="tag" />
     <result column="preface" jdbcType="VARCHAR" property="preface" />
-    <result column="img" jdbcType="VARCHAR" property="img" />
-    <result column="create_date" jdbcType="DATE" property="createDate" />
+    <result column="teclearning_img" jdbcType="VARCHAR" property="img" />
+    <result column="teclearning_create_date" jdbcType="DATE" property="createDate" />
 
     <collection property="chapterList" ofType="com.cyb.blogserver.domain.Chapter" column="teclearning_id">
-      <id column="cid" jdbcType="VARCHAR" property="id" />
+      <id column="chapter_id" jdbcType="VARCHAR" property="id" />
       <result column="teclearning_id" jdbcType="VARCHAR" property="teclearningId" />
-      <result column="title" jdbcType="VARCHAR" property="title" />
+      <result column="chapter_title" jdbcType="VARCHAR" property="title" />
       <result column="description" jdbcType="VARCHAR" property="description" />
       <result column="content" jdbcType="VARCHAR" property="content" />
-      <result column="img" jdbcType="VARCHAR" property="img" />
-      <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+      <result column="chapter_img" jdbcType="VARCHAR" property="img" />
+      <result column="chapter_create_date" jdbcType="TIMESTAMP" property="createDate" />
     </collection>
   </resultMap>
 
   <!-- 添加 -->
   <insert id="insert" parameterType="com.cyb.blogserver.domain.TecLearning">
     INSERT INTO teclearning
-    (id, title, category, tag, preface, img, create_date)
+    (teclearning_id, teclearning_title, category, tag, preface, teclearning_img, teclearning_create_date)
     VALUES (#{id}, #{title}, #{category}, #{tag}, #{preface}, #{img}, #{createDate})
   </insert>
 
@@ -48,7 +48,7 @@
     FROM teclearning
     <where>
       <if test="title != null and title !=''">
-        AND title = #{title}
+        AND teclearning_title = #{title}
       </if>
       <if test="category != null and category !=''">
         AND category = #{category}
@@ -62,7 +62,8 @@
   <select id="selectByTecLearning" resultMap="tecLearningMap">
     SELECT t.*,c.*
     FROM teclearning t
-    LEFT JOIN chapter c ON t.id = c.teclearning_id
+    LEFT JOIN chapter c ON t.teclearning_id = c.teclearning_id
+    ORDER BY t.teclearning_create_date, c.chapter_create_date
   </select>
 
 </mapper>
