@@ -117,6 +117,7 @@
     </div>
 </template>
 <script>
+import {SET_REFRESH_MODEL_LIST_TECLEARNING} from '@/store/mutation-type'
 import {mapMutations, mapGetters, mapState} from 'vuex'
 import {isEmptyMap} from '@/Utils/Utils'
 import WangEditor from 'wangeditor'
@@ -180,16 +181,7 @@ export default {
     },
     methods:{
         test: function(){
-            // this.$axios.get('yjdwyjqxjl/qxdjpage',{
-            //     params: {                           //参数
-            //         current: 1,
-            //         size: 10,
-            //     },
-            //     }).then(res => {                   //请求成功后的处理函数     
-            //         console.log(res);   
-            //     }).catch(err => {                 //请求失败后的处理函数   
-            //         console.log(err);
-            //     })
+            
         },
         //显示BlogDrawer
         changeShowBlogDrawer: function(){
@@ -222,8 +214,13 @@ export default {
             this.$axios.post('tecLearning/add',
                     this.$qs.stringify(this.blog, {arrayFormat: 'indices', allowDots: true})
                 ).then(res => {                   //请求成功后的处理函数     
-                    console.log(res.data);
                     this.message(res.data);
+
+                    //刷新列表
+                    if(res.data.validate){
+                        let refreshModelListTecLearning = this.$store.getters.refreshModelListTecLearning;
+                        this.$store.commit(SET_REFRESH_MODEL_LIST_TECLEARNING,!refreshModelListTecLearning);
+                    }
                 }).catch(err => {                 //请求失败后的处理函数   
                     console.log(err);
                 })

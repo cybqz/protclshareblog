@@ -44,25 +44,27 @@
     </div>
 </template>
 <script>
+import {SET_REFRESH_MODEL_LIST} from '@/store/mutation-type'
+import {mapMutations, mapGetters, mapState} from 'vuex'
 import {isEmptyStr, dateFormat} from '@/Utils/Utils'
 export default {
   name: 'TecLearning',
   data () {
     return {
       blogList: [],
-
+      params: {
+          pageIndex: 1,
+          pageSize: 7,
+          pageCount: 0
+      }
     }
   },
   methods:{
         //加载技术学习博客列表
-        getList: function(){
-            this.$axios.post('tecLearning/selectByTecLearning',{
-                params: {                           //参数
-                    current: 1,
-                    size: 10,
-                },
-                }).then(res => {                   //请求成功后的处理函数     
-                    console.log(res);
+        getTecLearningList: function(){
+            this.$axios.post('tecLearning/selectByTecLearning',
+                    this.$qs.stringify(this.params,{allowDots: true})
+                ).then(res => {                   //请求成功后的处理函数     
                     let data = res.data.data;
                     this.blogList = [];
                     for(let i in data){
@@ -123,11 +125,30 @@ export default {
         //格式化时间
         dateFormat: function(time){
             return dateFormat(time);
+        },
+
+        //加载更多
+        handleReachBottom: function(){
+            let pageIndex = this.params.pageIndex;
+            this.params.pageIndex = pageIndex + 1;
+            this.getTecLearningList();
         }
     },
-    created(){},
+    created(){
+
+    },
     mounted(){
-        this.getList();
+        this.getTecLearningList();
+    },
+    watch: {
+        listenRefreshModelList: function(before, current){
+            this.getTecLearningList();
+        }
+    },
+    computed: {
+        listenRefreshModelList(){
+            return this.$store.getters.refreshModelListTecLearning;
+        }
     }
 }
 </script>

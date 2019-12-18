@@ -52,12 +52,6 @@
     }
    }
  </script>
-
- <style lang="stylus">
- 
-  
- </style>
-
  <style scoped lang="stylus">
   body
     padding 0

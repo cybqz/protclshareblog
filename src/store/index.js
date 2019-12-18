@@ -8,17 +8,26 @@ const debug = true
 
 export default new Vuex.Store({
     state: {
-        model: 'teclearning' //当前选中的模块
+        model: 'teclearning', //当前选中的模块
+        refreshModelListTecLearning: false 
+
     },
     mutations: {
         [types.SET_MODEL](state, model) {
             state.model = model
+        },
+
+        [types.SET_REFRESH_MODEL_LIST_TECLEARNING](state, refreshModelListTecLearning) {
+            state.refreshModelListTecLearning = refreshModelListTecLearning
         }
     },
     actions: {},
     getters: {            // 定义getters，可以通过mapGetters拓展函数调用
         model: state => {
             return state.model
+        },
+        refreshModelListTecLearning: state => {
+            return state.refreshModelListTecLearning
         }
     },
     plugins: debug ? [createLogger()] : []   // 是否开启vuex的debug模式
