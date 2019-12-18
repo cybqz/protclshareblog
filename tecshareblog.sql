@@ -11,7 +11,7 @@
  Target Server Version : 50728
  File Encoding         : 65001
 
- Date: 10/12/2019 21:47:29
+ Date: 16/12/2019 22:13:05
 */
 
 SET NAMES utf8mb4;
@@ -22,25 +22,27 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `chapter`;
 CREATE TABLE `chapter`  (
-  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'ID',
+  `chapter_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'ID',
   `teclearning_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '关联技术学习',
-  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '标题',
+  `chapter_title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '标题',
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
   `content` varchar(10240) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '内容',
-  `img` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '图片',
-  `create_date` datetime(0) NULL DEFAULT NULL COMMENT '创建日期',
-  PRIMARY KEY (`id`) USING BTREE,
+  `chapter_img` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '图片',
+  `chapter_create_date` datetime(0) NULL DEFAULT NULL COMMENT '创建日期',
+  PRIMARY KEY (`chapter_id`) USING BTREE,
   INDEX `fk_teclearning_id`(`teclearning_id`) USING BTREE,
-  CONSTRAINT `fk_teclearning_id` FOREIGN KEY (`teclearning_id`) REFERENCES `teclearning` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  CONSTRAINT `fk_teclearning_id` FOREIGN KEY (`teclearning_id`) REFERENCES `teclearning` (`teclearning_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of chapter
 -- ----------------------------
-INSERT INTO `chapter` VALUES ('564353b1-25fc-459b-9b4c-74fbb88cae21', '88aaa292-5751-4be8-a0ac-f3915fd7fc3b', 'q', 'q', '<p>q</p>', NULL, '2019-12-10 13:44:37');
-INSERT INTO `chapter` VALUES ('5e63ee70-7daf-49a4-a4a5-7e4389359b85', '88aaa292-5751-4be8-a0ac-f3915fd7fc3b', 'c', 'c', '<p>c</p>', NULL, '2019-12-10 13:44:37');
-INSERT INTO `chapter` VALUES ('9a833d6c-795f-43c4-ae76-e4644586b8bb', 'ce187083-9a93-4849-a53a-23b2fb135814', 'q', 'q', '<p>q</p>', NULL, '2019-12-10 13:35:23');
-INSERT INTO `chapter` VALUES ('f0a2580a-c97a-453d-86a6-9c833b371eee', 'ce187083-9a93-4849-a53a-23b2fb135814', 'c', 'c', '<p>c</p>', NULL, '2019-12-10 13:35:23');
+INSERT INTO `chapter` VALUES ('19717f76-964b-4eb8-8467-bed00f894a3c', '9ea908d3-40ea-4571-b3d8-815bbdd70c9c', 'B', 'bbbbbbbbbbbb', '<p>bbbbbbbbbbbbbbbbbbbb</p>', NULL, '2019-12-16 13:02:08');
+INSERT INTO `chapter` VALUES ('63ebfbc6-9245-4848-8625-aa1e876d9b18', '3ecb4726-4493-4039-b968-a9d0c305251e', 'cccccccccc', 'cccccccccccccc', '<p>cccccccccccccccccc</p>', NULL, '2019-12-16 13:56:08');
+INSERT INTO `chapter` VALUES ('855f1590-d842-43e8-a24f-3e39982cd990', '9ea908d3-40ea-4571-b3d8-815bbdd70c9c', 'A', 'A', '<p>aaaaaaaaaaaaaaa</p>', NULL, '2019-12-16 13:02:08');
+INSERT INTO `chapter` VALUES ('993bbaf6-9d3b-404b-a09c-fa69552e3c81', '9ea908d3-40ea-4571-b3d8-815bbdd70c9c', 'C', 'ccccccccccccccc', '<p>ccccccccccccccc</p><table border=\"0\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\"><tbody><tr><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr></tbody></table><pre><code>this.blog.chapterList.push(chaptermap)<br>                this.blogChapter = {};<br>                this.editor.txt.html(\'\');<br>                this.AddChapterResult = true;</code></pre><p><br></p>', NULL, '2019-12-16 13:02:08');
+INSERT INTO `chapter` VALUES ('f9c519dd-7fe1-487f-9d75-3d82b4e01de0', '3ecb4726-4493-4039-b968-a9d0c305251e', 'A', 'aaaaaaaaaaa', '<p>aaaaaaa</p>', NULL, '2019-12-16 13:56:08');
+INSERT INTO `chapter` VALUES ('ff6f180f-c2e0-4a4a-914f-a95ba181fb69', '3ecb4726-4493-4039-b968-a9d0c305251e', 'B', 'bbbbbbbbbbbbb', '<p>bbbbbbbbbbbbbbb</p>', NULL, '2019-12-16 13:56:08');
 
 -- ----------------------------
 -- Table structure for parames
@@ -102,21 +104,21 @@ CREATE TABLE `role_permission`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `teclearning`;
 CREATE TABLE `teclearning`  (
-  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'ID',
-  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '标题',
+  `teclearning_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'ID',
+  `teclearning_title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '标题',
   `category` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '类别',
   `tag` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '标签',
   `preface` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '前言',
-  `img` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '图片',
-  `create_date` datetime(0) NULL DEFAULT NULL COMMENT '创建日期',
-  PRIMARY KEY (`id`) USING BTREE
+  `teclearning_img` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '图片',
+  `teclearning_create_date` datetime(0) NULL DEFAULT NULL COMMENT '创建日期',
+  PRIMARY KEY (`teclearning_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of teclearning
 -- ----------------------------
-INSERT INTO `teclearning` VALUES ('88aaa292-5751-4be8-a0ac-f3915fd7fc3b', 'title', 'category', 'tag', 'preface', NULL, '2019-12-10 13:44:37');
-INSERT INTO `teclearning` VALUES ('ce187083-9a93-4849-a53a-23b2fb135814', 'title', 'category', 'tag', 'preface', NULL, '2019-12-10 13:35:23');
+INSERT INTO `teclearning` VALUES ('3ecb4726-4493-4039-b968-a9d0c305251e', 'B', '', 'ssss', 'ssssss', NULL, '2019-12-16 13:56:08');
+INSERT INTO `teclearning` VALUES ('9ea908d3-40ea-4571-b3d8-815bbdd70c9c', 'A', '', 'aaa,bbbbb', 'qqqqqqqqq', NULL, '2019-12-16 13:02:08');
 
 -- ----------------------------
 -- Table structure for user

@@ -3,6 +3,7 @@
 <mapper namespace="com.cyb.blogserver.dao.TecLearningMapper">
   <resultMap id="tecLearningMap" type="com.cyb.blogserver.domain.TecLearning">
     <id column="teclearning_id" jdbcType="VARCHAR" property="id" />
+    <result column="author" jdbcType="VARCHAR" property="author" />
     <result column="teclearning_title" jdbcType="VARCHAR" property="title" />
     <result column="category" jdbcType="VARCHAR" property="category" />
     <result column="tag" jdbcType="VARCHAR" property="tag" />
@@ -24,8 +25,8 @@
   <!-- 添加 -->
   <insert id="insert" parameterType="com.cyb.blogserver.domain.TecLearning">
     INSERT INTO teclearning
-    (teclearning_id, teclearning_title, category, tag, preface, teclearning_img, teclearning_create_date)
-    VALUES (#{id}, #{title}, #{category}, #{tag}, #{preface}, #{img}, #{createDate})
+    (teclearning_id, author, teclearning_title, category, tag, preface, teclearning_img, teclearning_create_date)
+    VALUES (#{id}, #{author}, #{title}, #{category}, #{tag}, #{preface}, #{img}, #{createDate})
   </insert>
 
   <!-- 删除 -->
@@ -60,10 +61,20 @@
   </select>
 
   <select id="selectByTecLearning" resultMap="tecLearningMap">
-    SELECT t.*,c.*
-    FROM teclearning t
-    LEFT JOIN chapter c ON t.teclearning_id = c.teclearning_id
-    ORDER BY t.teclearning_create_date, c.chapter_create_date
+    SELECT
+        t.*,
+        c.*
+    FROM
+        (SELECT * FROM teclearning  WHERE teclearning_id IN
+            (SELECT DISTINCT teclearning_id FROM
+                (SELECT * FROM teclearning ORDER BY teclearning_create_date DESC LIMIT #{pagenation.offset}, #{pagenation.pageSize}) a
+            )
+        ) t
+    LEFT JOIN chapter c
+    ON t.teclearning_id = c.teclearning_id
+    ORDER BY
+        t.teclearning_create_date DESC,
+        c.chapter_create_date ASC
   </select>
 
 </mapper>

@@ -9,8 +9,7 @@ import com.cyb.blogserver.service.TecLearningServices;
 import com.cyb.blogserver.utils.MyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -68,12 +67,15 @@ public class TecLearningController {
 
 	/**
 	 * 查询技术学习博客
-	 * @param tecLearning
-	 * @param pagenation
+	 * @param pageIndex
+	 * @param pageSize
 	 */
 	@RequestMapping(value="/selectByTecLearning")
 	@ResponseBody
-	public Tips selectByTecLearning(TecLearning tecLearning, Pagenation pagenation){
+	public Tips selectByTecLearning(Integer pageIndex, Integer pageSize){
+
+		TecLearning tecLearning = null;
+		Pagenation pagenation = new Pagenation(pageSize, pageIndex);
         Tips tips = new Tips("查询技术学习博客成功！", true, true);
         tips.setData(tecLearningServices.selectByTecLearning(tecLearning, pagenation));
         return tips;

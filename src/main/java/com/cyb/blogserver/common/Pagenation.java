@@ -2,7 +2,7 @@ package com.cyb.blogserver.common;
 
 public class Pagenation {
 
-	private int pageSize = 10;
+	private int pageSize = 5;
 	
 	private int pageIndex = 1;
 	
@@ -15,7 +15,12 @@ public class Pagenation {
 	private long dataCount;
 	
 	public boolean searcha = true;
-	
+
+	public Pagenation(int pageSize, int pageIndex) {
+		this.pageSize = pageSize;
+		this.pageIndex = pageIndex;
+	}
+
 	public int getPageSize() {
 		return pageSize;
 	}
@@ -28,6 +33,7 @@ public class Pagenation {
 	}
 	
 	public int getPageIndex() {
+
 		return pageIndex;
 	}
 

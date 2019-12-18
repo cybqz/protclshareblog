@@ -46,6 +46,7 @@ public class TecLearningServicesImpl implements TecLearningServices {
 		Map<String, TecLearning> map = new HashMap<String, TecLearning>();
 		List<TecLearning> list = tecLearningMapper.selectByTecLearning(tecLearning, pagenation);
 		if(null != list && list.size() > 0){
+			List<String> keyList = new ArrayList<String>();
 			resultList = new ArrayList<TecLearning>();
 			for(TecLearning t : list){
 				if(map.containsKey(t.getId())){
@@ -54,11 +55,11 @@ public class TecLearningServicesImpl implements TecLearningServices {
 					map.put(t.getId(), mt);
 				}else{
 					map.put(t.getId(), t);
+					keyList.add(t.getId());
 				}
 			}
-			Iterator<TecLearning> ite =  map.values().iterator();
-			while (ite.hasNext()){
-				resultList.add(ite.next());
+			for(String key : keyList){
+				resultList.add(map.get(key));
 			}
 		}
 		return resultList;

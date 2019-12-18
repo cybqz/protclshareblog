@@ -14,6 +14,11 @@ public class TecLearning {
     private String id;
 
     /**
+     * 作者
+     */
+    private String author;
+
+    /**
      * 标题
      */
     private String title;
@@ -54,6 +59,14 @@ public class TecLearning {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public String getTitle() {
