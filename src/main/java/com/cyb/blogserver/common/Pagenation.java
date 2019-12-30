@@ -2,9 +2,9 @@ package com.cyb.blogserver.common;
 
 public class Pagenation {
 
-	private int pageSize = 5;
+	private Integer pageSize = 5;
 	
-	private int pageIndex = 1;
+	private Integer pageIndex = 1;
 	
 	private int pageCount;
 	
@@ -16,28 +16,32 @@ public class Pagenation {
 	
 	public boolean searcha = true;
 
-	public Pagenation(int pageSize, int pageIndex) {
-		this.pageSize = pageSize;
-		this.pageIndex = pageIndex;
+	public Pagenation(Integer pageSize, Integer pageIndex) {
+		if(null != pageSize){
+			this.pageSize = pageSize;
+		}
+		if(null != pageIndex){
+			this.pageIndex = pageIndex;
+		}
 	}
 
-	public int getPageSize() {
+	public Integer getPageSize() {
 		return pageSize;
 	}
 
-	public void setPageSize(int pageSize) {
+	public void setPageSize(Integer pageSize) {
 		if(pageSize <= 0 || pageSize >= 50) {
 			pageSize = 10;
 		}
 		this.pageSize = pageSize;
 	}
 	
-	public int getPageIndex() {
+	public Integer getPageIndex() {
 
 		return pageIndex;
 	}
 
-	public void setPageIndex(int pageIndex) {
+	public void setPageIndex(Integer pageIndex) {
 		if(pageIndex <= 1) {
 			pageIndex = 1;
 		}

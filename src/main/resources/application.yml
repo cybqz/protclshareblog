@@ -1,6 +1,12 @@
 debug: false
 server:
    port: 9090
+   ssl:
+    key-store: server.keystore
+    key-alias: tomcat
+    enabled: true
+    key-store-password: cyb123
+    key-store-type: JKS
 spring:
   application:
     name: tecshareblogserver

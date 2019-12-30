@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.cyb</groupId>
-    <artifactId>blogserver</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>blogserver</name>
+    <artifactId>tecblogserver</artifactId>
+    <version>0.0.1</version>
+    <name>tecblogserver</name>
     <description>blogserver project for Spring Boot</description>
 
     <properties>

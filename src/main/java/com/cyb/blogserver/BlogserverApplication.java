@@ -16,11 +16,4 @@ public class BlogserverApplication {
 
         SpringApplication.run(BlogserverApplication.class, args);
     }
-
-    @Bean
-    public ConfigurableServletWebServerFactory webServerFactory(){
-        TomcatServletWebServerFactory factory = new TomcatServletWebServerFactory();
-        factory.addConnectorCustomizers((TomcatConnectorCustomizer) connector -> connector.setProperty("relaxedQueryChars", "|{}[]\\"));
-        return factory;
-    }
 }
