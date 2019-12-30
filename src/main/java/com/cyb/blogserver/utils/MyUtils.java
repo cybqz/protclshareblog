@@ -34,4 +34,16 @@ public class MyUtils {
 
 		return LocalDate.now();
 	}
+
+	/**
+	 * 根据文件名称获取文件类型
+	 * @param fullName
+	 * @return
+	 */
+	public static String getFileTypeByFullName(String fullName){
+		if(!StringUtils.isEmpty(fullName)){
+			return fullName.substring(fullName.lastIndexOf("."), fullName.length());
+		}
+		return null;
+	}
 }

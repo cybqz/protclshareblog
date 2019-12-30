@@ -94,6 +94,9 @@
                     <include>**/*.*</include>
                 </includes>
             </resource>
+            <resource>
+                <directory>src/main/webapp</directory>
+            </resource>
         </resources>
         <plugins>
             <plugin>
