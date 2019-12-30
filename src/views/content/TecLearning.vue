@@ -119,7 +119,7 @@ export default {
             if(isEmptyStr(img)){
                 return null;
             }
-            return require("@/assets/images/"+img+".png");
+            return this.$axios.defaults.baseURL + img;
         },
 
         //格式化时间

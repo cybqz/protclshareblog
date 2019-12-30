@@ -6,7 +6,11 @@
             </div>
             <div id="btn-list-right">
                 <Select v-model="query.b" multiple style="width:260px">
-                    <Option v-for="item in selectList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                    <Option v-for="item in selectList" :value="item.value" :key="item.value">
+                        
+                        <span>{{ item.label }}</span>
+                        <span style="float:right;color:#ccc">{{ item.category }}</span>
+                    </Option>
                 </Select>
                 <Button icon="md-add" type="primary" shape="circle" @click="changeShowBlogDrawer"></Button>
             </div>
@@ -31,9 +35,11 @@
                 <Row :gutter="32">
                     <Col span="12">
                         <FormItem label="分类" label-position="top">
-                            <Select v-model="blog.category" placeholder="请选择分类">
-                                <Option value="jobs">Steven Paul Jobs</Option>
-                                <Option value="ive">Sir Jonathan Paul Ive</Option>
+                            <Select v-model="blog.category">
+                                <Option v-for="item in selectList" :value="item.value" :key="item.value">
+                                    <span>{{ item.label }}</span>
+                                    <span style="float:right;color:#ccc">{{ item.category }}</span>
+                                </Option>
                             </Select>
                         </FormItem>
                     </Col>
@@ -54,7 +60,7 @@
                         :format="['jpg','jpeg','png']"
                         :max-size="2048"
                         type="drag"
-                        action="//jsonplaceholder.typicode.com/posts/"
+                        :action="tecLearningImageAction"
                         style="display: inline-block;width:58px;">
                         <div style="width: 58px;height:58px;line-height: 58px;">
                             <Icon type="ios-camera" size="20"></Icon>
@@ -124,6 +130,7 @@ import WangEditor from 'wangeditor'
 export default {
     data(){
         return {
+                tecLearningImageAction: '',
                 AddChapterResult: false,
                 isInitWangEditor: true,
                 editor: null,
@@ -165,16 +172,34 @@ export default {
                 },
                 selectList: [
                     {
-                        value: 'New York',
-                        label: 'New York'
+                        value: 'VUE',
+                        label: 'VUE',
+                        category: '前端'
                     },
                     {
-                        value: 'London',
-                        label: 'London'
+                        value: 'iview',
+                        label: 'iview',
+                        category: '前端'
                     },
                     {
-                        value: 'Sydney',
-                        label: 'Sydney'
+                        value: 'Recat',
+                        label: 'Recat',
+                        category: '前端'
+                    },
+                    {
+                        value: 'Java',
+                        label: 'Java',
+                        category: '后端'
+                    },
+                    {
+                        value: 'SpringBoot',
+                        label: 'SpringBoot',
+                        category: '后端'
+                    },
+                    {
+                        value: 'Mybatis',
+                        label: 'Mybatis',
+                        category: '后端'
                     }
                 ]
             }
@@ -205,8 +230,8 @@ export default {
         },
 
         //图片上传成功处理
-        handleImageUploadSuccess: function(){
-
+        handleImageUploadSuccess: function(res){
+            this.blog.img = res.data;
         },
 
         //添加blog
@@ -224,7 +249,7 @@ export default {
                 }).catch(err => {                 //请求失败后的处理函数   
                     console.log(err);
                 })
-            //this.blogDrawer.isShow = false;
+            this.blogDrawer.isShow = false;
         },
 
         //添加章节
@@ -341,6 +366,7 @@ export default {
     created(){
     },
     mounted(){
+        this.tecLearningImageAction = this.$axios.defaults.baseURL + 'upload/teclearning'
     },
     computed: {},
     watch: {}

@@ -25,7 +25,7 @@ const router = new Router({
         component :  Home   // Home是组件的名字，这个路由对应跳转到的组件。。注意component没有加“s”.
       },
       {
-          path : '/content',
+          path : '/tecshare/content',
           name : 'Content',
           component :  Content,
           beforeRouteEnter (to, from, next) {

@@ -3,19 +3,19 @@
        <Menu mode="horizontal" :theme="theme" active-name="teclearning" @on-select="switchMenu">
             <MenuItem name="teclearning">
                 <Icon type="ios-paper" />
-                <router-link to="/content/teclearning">技术学习</router-link>
+                <router-link to="/tecshare/content/teclearning">技术学习</router-link>
             </MenuItem>
             <MenuItem name="b">
                 <Icon type="ios-people" />
-                <router-link to="/content/b">埋坑笔记</router-link>
+                <router-link to="/tecshare/content/b">埋坑笔记</router-link>
             </MenuItem>
             <MenuItem name="c">
                 <Icon type="ios-paper" />
-                <router-link to="/content/c">项目介绍</router-link>
+                <router-link to="/tecshare/content/c">项目介绍</router-link>
             </MenuItem>
             <MenuItem name="d">
                 <Icon type="ios-construct" />
-                <router-link to="/content/d">我的模板</router-link>
+                <router-link to="/tecshare/content/d">我的模板</router-link>
             </MenuItem>
         </Menu>
         <!-- <br>
