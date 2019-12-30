@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : localhost-root
+ Source Server         : localhost
  Source Server Type    : MySQL
- Source Server Version : 50728
+ Source Server Version : 50724
  Source Host           : localhost:3306
  Source Schema         : tecshareblog
 
  Target Server Type    : MySQL
- Target Server Version : 50728
+ Target Server Version : 50724
  File Encoding         : 65001
 
- Date: 16/12/2019 22:13:05
+ Date: 30/12/2019 10:41:04
 */
 
 SET NAMES utf8mb4;
@@ -105,6 +105,7 @@ CREATE TABLE `role_permission`  (
 DROP TABLE IF EXISTS `teclearning`;
 CREATE TABLE `teclearning`  (
   `teclearning_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'ID',
+  `author` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '作者',
   `teclearning_title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '标题',
   `category` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '类别',
   `tag` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '标签',
@@ -117,8 +118,14 @@ CREATE TABLE `teclearning`  (
 -- ----------------------------
 -- Records of teclearning
 -- ----------------------------
-INSERT INTO `teclearning` VALUES ('3ecb4726-4493-4039-b968-a9d0c305251e', 'B', '', 'ssss', 'ssssss', NULL, '2019-12-16 13:56:08');
-INSERT INTO `teclearning` VALUES ('9ea908d3-40ea-4571-b3d8-815bbdd70c9c', 'A', '', 'aaa,bbbbb', 'qqqqqqqqq', NULL, '2019-12-16 13:02:08');
+INSERT INTO `teclearning` VALUES ('2d439b77-0066-45f0-88b9-46f36c44a77b', 'author', 'ssss', 'Recat', 'ssss', 'sssss', NULL, '2019-12-30 10:38:14');
+INSERT INTO `teclearning` VALUES ('382d2a41-8188-41d9-a0f3-6dd7a90443e4', 'author', 'ssaadda', 'iview', 'asad', 'asasad', NULL, '2019-12-30 02:16:32');
+INSERT INTO `teclearning` VALUES ('3ecb4726-4493-4039-b968-a9d0c305251e', 'author', 'B', 'test', 'ssss', 'ssssss', NULL, '2019-12-16 13:56:08');
+INSERT INTO `teclearning` VALUES ('4b2739c4-7e49-41ab-bbde-c4aaccf8938b', 'author', 'cccggg', 'Recat', 'ccc', 'cccc', NULL, '2019-12-30 02:22:15');
+INSERT INTO `teclearning` VALUES ('97cd2663-a664-4adc-af91-31779849c9ca', 'author', 'cccgggrr', 'Recat', 'ccc', 'cccc', NULL, '2019-12-30 10:25:43');
+INSERT INTO `teclearning` VALUES ('9ca26f50-7c2d-401f-bf23-92894fff8d42', 'author', 'ccc', 'Recat', 'ccc', 'cccc', NULL, '2019-12-30 02:20:58');
+INSERT INTO `teclearning` VALUES ('9ea908d3-40ea-4571-b3d8-815bbdd70c9c', 'author', 'A', 'test', 'aaa,bbbbb', 'qqqqqqqqq', NULL, '2019-12-16 13:02:08');
+INSERT INTO `teclearning` VALUES ('e0322e4c-eb55-4038-9420-7de030a97a0f', 'author', 'ccccvvvv', 'Recat', 'vvvv', 'vvvv', NULL, '2019-12-30 10:28:10');
 
 -- ----------------------------
 -- Table structure for user
