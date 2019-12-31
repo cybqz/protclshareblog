@@ -36,8 +36,8 @@ Vue.use(Vuex);
 // axios 配置
 axios.defaults.timeout = 5000
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
-//axios.defaults.baseURL = 'https://127.0.0.1:9090/'
-axios.defaults.baseURL = 'https://114.115.134.1:9090/'
+axios.defaults.baseURL = 'https://127.0.0.1:9090/'
+//axios.defaults.baseURL = 'https://114.115.134.1:9090/'
  
 const root = document.createElement('div')
 root.id = 'app'

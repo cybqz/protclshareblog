@@ -56,7 +56,7 @@
                     <Upload
                         ref="imageUpload"
                         :show-upload-list="true"
-                        :on-success="handleImageUploadSuccess"
+                        :on-success="blogImageUploadSuccess"
                         :format="['jpg','jpeg','png']"
                         :max-size="2048"
                         type="drag"
@@ -130,6 +130,7 @@ import WangEditor from 'wangeditor'
 export default {
     data(){
         return {
+                chapterImageAction: '',
                 tecLearningImageAction: '',
                 AddChapterResult: false,
                 isInitWangEditor: true,
@@ -229,8 +230,8 @@ export default {
             }
         },
 
-        //图片上传成功处理
-        handleImageUploadSuccess: function(res){
+        //技术学习图片上传成功处理
+        blogImageUploadSuccess: function(res){
             this.blog.img = res.data;
         },
 
@@ -296,7 +297,7 @@ export default {
         initWangEditor: function(){
             this.editor = new WangEditor(this.$refs.toolbar, this.$refs.textarea)
             this.editor.customConfig.uploadImgShowBase64 = false // base 64 存储图片
-            this.editor.customConfig.uploadImgServer = 'http://otp.cdinfotech.top/file/upload_images'// 配置服务器端地址
+            this.editor.customConfig.uploadImgServer = this.chapterImageAction// 配置服务器端地址
             this.editor.customConfig.uploadImgHeaders = { }// 自定义 header
             this.editor.customConfig.uploadFileName = 'file' // 后端接受上传文件的参数名
             this.editor.customConfig.uploadImgMaxSize = 2 * 1024 * 1024 // 将图片大小限制为 2M
@@ -327,30 +328,18 @@ export default {
 
             this.editor.customConfig.uploadImgHooks = {
                 fail: (xhr, editor, result) => {
-                    // 插入图片失败回调
                 },
                 success: (xhr, editor, result) => {
-                    // 图片上传成功回调
                 },
                 timeout: (xhr, editor) => {
-                    // 网络超时的回调
                 },
                 error: (xhr, editor) => {
-                    // 图片上传错误的回调
                 },
                 customInsert: (insertImg, result, editor) => {
-                    // 图片上传成功，插入图片的回调
-                    //result为上传图片成功的时候返回的数据，这里我打印了一下发现后台返回的是data：[{url:"路径的形式"},...]
-                    // console.log(result.data[0].url)
-                    //insertImg()为插入图片的函数
-                    //循环插入图片
-                    // for (let i = 0; i < 1; i++) {
-                    // console.log(result)
-                    let url = "http://otp.cdinfotech.top"+result.url
+                    let url = this.$axios.defaults.baseURL+result.data;
                     insertImg(url)
                 }
             }
-            // 创建富文本编辑器
             this.editor.create()
         },
         message: function(data){
@@ -366,7 +355,8 @@ export default {
     created(){
     },
     mounted(){
-        this.tecLearningImageAction = this.$axios.defaults.baseURL + 'upload/teclearning'
+        this.chapterImageAction = this.$axios.defaults.baseURL + 'upload/chapter';
+        this.tecLearningImageAction = this.$axios.defaults.baseURL + 'upload/teclearning';
     },
     computed: {},
     watch: {}
