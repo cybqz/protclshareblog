@@ -7,21 +7,15 @@
 
     <fragment
             android:id="@+id/navigation_home"
-            android:name="com.cyb.protclsb.ui.home.HomeFragment"
-            android:label="@string/title_home"
-            tools:layout="@layout/fragment_home"/>
-
-    <!--<fragment
-            android:id="@+id/navigation_dashboard"
-            android:name="com.cyb.protclsb.ui.dashboard.DashboardFragment"
-            android:label="@string/title_dashboard"
-            tools:layout="@layout/fragment_dashboard"/>-->
+            android:name="com.cyb.protclsb.ui.pro.ProFragment"
+            android:label="@string/title_pro"
+            tools:layout="@layout/fragment_pro_c"/>
 
     <fragment
             android:id="@+id/navigation_notifications"
-            android:name="com.cyb.protclsb.ui.notifications.NotificationsFragment"
-            android:label="@string/title_notifications"
-            tools:layout="@layout/fragment_notifications"/>
+            android:name="com.cyb.protclsb.ui.tcl.TclFragment"
+            android:label="@string/title_tcl"
+            tools:layout="@layout/fragment_tcl"/>
 
     <fragment
             android:id="@+id/navigation_forum"

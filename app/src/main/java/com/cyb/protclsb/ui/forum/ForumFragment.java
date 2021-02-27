@@ -15,7 +15,6 @@ import com.cyb.protclsb.adapter.ForumUserListAdapter;
 import com.cyb.protclsb.common.RequestConstant;
 import com.cyb.protclsb.util.HttpUtil;
 import com.cyb.protclsb.R;
-import com.cyb.protclsb.ui.talk.TalkFragment;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -43,7 +42,6 @@ public class ForumFragment extends Fragment {
         root = inflater.inflate(R.layout.fragment_forum, container, false);
 
         userListView = root.findViewById(R.id.list_view_forum_user);
-        //footView = inflater.inflate(R.layout.fragment_loading, container, false);
         forumUserListAdapter = new ForumUserListAdapter(getContext(), userList);
         userListView.setAdapter(forumUserListAdapter);
 
@@ -106,11 +104,11 @@ public class ForumFragment extends Fragment {
     //正确的做法
     private void switchFragment(String name) {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        TalkFragment talkFragment = new TalkFragment();
+        //TalkFragment talkFragment = new TalkFragment();
         Bundle bundle=new Bundle();
         bundle.putString("name", name);
-        talkFragment.setArguments(bundle);
-        transaction.replace(R.id.nav_host_fragment, talkFragment);
+        //talkFragment.setArguments(bundle);
+        //transaction.replace(R.id.nav_host_fragment, talkFragment);
         transaction.commit();
     }
 

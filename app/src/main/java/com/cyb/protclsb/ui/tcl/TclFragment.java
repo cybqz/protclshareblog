@@ -1,4 +1,4 @@
-package com.cyb.protclsb.ui.notifications;
+package com.cyb.protclsb.ui.tcl;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,17 +12,17 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import com.cyb.protclsb.R;
 
-public class NotificationsFragment extends Fragment {
+public class TclFragment extends Fragment {
 
-    private NotificationsViewModel notificationsViewModel;
+    private TclViewModel tclViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        notificationsViewModel = ViewModelProviders.of(this).get(NotificationsViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_notifications, container, false);
-        final TextView textView = root.findViewById(R.id.text_notifications);
-        notificationsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        tclViewModel = ViewModelProviders.of(this).get(TclViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_tcl, container, false);
+        final TextView textView = root.findViewById(R.id.text_tcl);
+        tclViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
