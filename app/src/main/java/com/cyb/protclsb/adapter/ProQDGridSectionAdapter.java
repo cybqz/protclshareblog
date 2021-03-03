@@ -25,13 +25,14 @@ public class ProQDGridSectionAdapter extends QMUIDefaultStickySectionAdapter<MyS
 
     private LayoutInflater mInflater;
     private Context context;
-    private TextView textViewHeader;
-    private ImageView imgViewHeader;
+    private TextView titleTextHeader;
+    private ImageView arrowImgHeader;
     private TextView textViewItem;
 
+
     public ProQDGridSectionAdapter(Context context){
-        this.context = context;
         this.mInflater = LayoutInflater.from(context);
+        this.context = context;
     }
 
     @Override
@@ -50,7 +51,6 @@ public class ProQDGridSectionAdapter extends QMUIDefaultStickySectionAdapter<MyS
     @NonNull
     @Override
     protected QMUIStickySectionAdapter.ViewHolder onCreateSectionItemViewHolder(@NonNull ViewGroup viewGroup) {
-
         Context context = viewGroup.getContext();
         View itemView = LayoutInflater.from(context).inflate(R.layout.fragment_pro_list, viewGroup, false);
         return new ViewHolder(itemView);
@@ -58,12 +58,16 @@ public class ProQDGridSectionAdapter extends QMUIDefaultStickySectionAdapter<MyS
 
     @Override
     protected void onBindSectionHeader(final QMUIStickySectionAdapter.ViewHolder holder, final int position, QMUISection<MySectionHeader, MySectionItem> section) {
-        textViewHeader = holder.itemView.findViewById(R.id.pro_section_layout_header_title);
-        textViewHeader.setText(section.getHeader().getText());
-        //点击事件
-        imgViewHeader = holder.itemView.findViewById(R.id.pro_section_layout_header_img);
-        if(null != imgViewHeader){
-            imgViewHeader.setOnClickListener(new View.OnClickListener() {
+
+        //获取标题元素并设置值
+        titleTextHeader = holder.itemView.findViewById(R.id.pro_section_layout_header_title);
+        titleTextHeader.setText(section.getHeader().getText());
+
+        //获取图标元素并设置
+        arrowImgHeader = holder.itemView.findViewById(R.id.pro_section_layout_header_img);
+        if(null != arrowImgHeader){
+            arrowImgHeader.setRotation(section.isFold()?0f:270f);
+            arrowImgHeader.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int pos = holder.isForStickyHeader ? position : holder.getAdapterPosition();
