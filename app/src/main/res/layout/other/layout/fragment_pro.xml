@@ -14,8 +14,9 @@
                 android:id="@+id/pro_section_list"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
-        />
+                android:layout_weight="1">
+
+        </com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView>
 
     </com.qmuiteam.qmui.widget.pullRefreshLayout.QMUIPullRefreshLayout>
 
