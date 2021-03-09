@@ -5,10 +5,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
 import android.view.*;
-import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.*;
 import androidx.annotation.NonNull;
 import com.bumptech.glide.Glide;
 import com.cyb.protclsb.R;
@@ -103,20 +100,38 @@ public class ProSectionAdapter extends QMUIDefaultStickySectionAdapter<MySection
     protected void onBindSectionItem(ViewHolder holder, int position, QMUISection<MySectionHeader, MySectionItem> section, int itemIndex) {
 
         LinearLayout layout = (LinearLayout) holder.itemView;
-        layout.setBackgroundColor(Color.RED);
+        layout.setBackgroundColor(Color.GRAY);
 
         //设置子元素独占一行
         layout.setOrientation(LinearLayout.VERTICAL);
-        layout.setPadding(outerPaddingLeft + 20, 30, outerPaddingRight + 20,30);
+        layout.setPadding(0, 20, 0,0);
+        setViewMargins(layout, new int[]{0,20,0,20});
 
-        //QMUITextSizeSpan
+        //父布局会优先子布局获取焦点
+        layout.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
+
+        //添加单机事件
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ViewGroup group = (ViewGroup) v;
+                for(int i = 0; i < group.getChildCount(); i++){
+                    View child = group.getChildAt(i);
+                    Toast.makeText(context, child.getId(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
         //设置项目名称标题
         LinearLayout titleLayout = new LinearLayout(context);
         TextView proNameTitleView = createTitleView("项目名称：");
+        proNameTitleView.setId(100000);
         titleLayout.addView(proNameTitleView);
         TextView proNameContentView = createContentView("测试项目名称", false);
-        proNameContentView.setLeft(0);
+        proNameContentView.setPadding(0,0,0,0);
+        setViewMargins(proNameContentView, new int[]{0,0,0,0});
         titleLayout.addView(proNameContentView);
+        setViewMargins(titleLayout, new int[]{0,0,0,0});
         layout.addView(titleLayout);
 
         //设置项目介绍
@@ -130,14 +145,12 @@ public class ProSectionAdapter extends QMUIDefaultStickySectionAdapter<MySection
 
         //设置项目运行截图
         LinearLayout imgLayout = new LinearLayout(context);
-        imgLayout.setBackgroundColor(Color.RED);
         ImageView imageView = new ImageView(context);
-
         imageView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 500));
         imageView.setImageResource(R.drawable.t_pro);
         imageView.setBackgroundColor(Color.BLUE);
+        setViewMargins(imgLayout, new int[]{60,10,60,0});
         imgLayout.addView(imageView);
-        imgLayout.setOrientation(LinearLayout.VERTICAL);
         layout.addView(imgLayout);
     }
 
@@ -201,6 +214,20 @@ public class ProSectionAdapter extends QMUIDefaultStickySectionAdapter<MySection
             }else {
                 view.setLayoutParams(new LinearLayout.LayoutParams(size[0],size[1]));
             }
+        }
+    }
+
+    /**
+     * @Author 陈迎博
+     * @Title 设置View边距
+     * @Description
+     * @Date 2021/3/9
+     */
+    private void setViewMargins(View view, int[] margins){
+        if(null !=view){
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            layoutParams.setMargins(margins[0],margins[1],margins[2],margins[3]);
+            view.setLayoutParams(layoutParams);
         }
     }
 }
