@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.ListAdapter;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -20,8 +21,10 @@ import com.cyb.protclsb.ui.login.LoginFragment;
 import com.cyb.protclsb.util.HttpUtil;
 import com.cyb.protclsb.R;
 import com.qmuiteam.qmui.widget.QMUILoadingView;
+import com.qmuiteam.qmui.widget.QMUIObservableScrollView;
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
 import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
+import com.qmuiteam.qmui.widget.pullRefreshLayout.QMUIPullRefreshLayout;
 import com.qmuiteam.qmui.widget.section.QMUISection;
 import com.qmuiteam.qmui.widget.section.QMUIStickySectionLayout;
 import org.json.JSONObject;
@@ -46,9 +49,11 @@ public class ProFragment extends Fragment {
     private View root;
     private QMUIGroupListView listView;
     private DisplayMetrics displayMetrics;
+    private ProSectionAdapter proSectionAdapter;
+    private QMUIPullRefreshLayout pullRefreshLayout;
     private RecyclerView.LayoutManager mLayoutManager;
     private QMUIStickySectionLayout stickySectionLayout;
-    private ProSectionAdapter qdGridSectionAdapter;
+    private QMUIObservableScrollView observableScrollView;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,28 +61,73 @@ public class ProFragment extends Fragment {
 
         try {
             displayMetrics = this.getResources().getDisplayMetrics();
+
             root = inflater.inflate(R.layout.fragment_pro, container, false);
             listView = root.findViewById(R.id.pro_section_list);
+            pullRefreshLayout = root.findViewById(R.id.pro_pull_to_refresh);
+            observableScrollView = root.findViewById(R.id.pro_observable_scroll_view);
 
             renderProItemList(6);
+            setPullRefreshLayout();
+            setObservableScrollView();
         }catch (Exception e){
             e.printStackTrace();
         }
-
-        System.out.println("----------------------:" + fragmentName);
         return root;
     }
 
+    /**
+     * @Author 陈迎博
+     * @Title 设置滚动处理
+     * @Description
+     * @Date 2021/3/14
+     */
+    private void setObservableScrollView(){
+        observableScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                System.out.println(oldScrollX + "," + scrollX);
+                System.out.println(oldScrollY + "," + scrollY);
+            }
+        });
+    }
+
+    /**
+     * @Author 陈迎博
+     * @Title 下拉刷新处理
+     * @Description 下拉刷新处理
+     * @Date 2021/3/14
+     */
+    private void setPullRefreshLayout(){
+
+        pullRefreshLayout.setOnPullListener(new QMUIPullRefreshLayout.OnPullListener() {
+            @Override
+            public void onMoveTarget(int offset) {}
+
+            @Override
+            public void onMoveRefreshView(int offset) {}
+
+            @Override
+            public void onRefresh() {}
+        });
+    }
+
+    /**
+     * @Author 陈迎博
+     * @Title 渲染列表数据
+     * @Description
+     * @Date 2021/3/14
+     */
     private void renderProItemList(int count){
 
         for(int i = 1; i <= count; i++){
 
-            qdGridSectionAdapter = new ProSectionAdapter(getContext(), displayMetrics);
-            qdGridSectionAdapter.setData(Arrays.asList(createSection("Header-" + i, true)));
+            proSectionAdapter = new ProSectionAdapter(getContext(), displayMetrics);
+            proSectionAdapter.setData(Arrays.asList(createSection("Header-" + i, true)));
 
             mLayoutManager = createLayoutManager();
             stickySectionLayout = new QMUIStickySectionLayout(getContext());
-            stickySectionLayout.setAdapter(qdGridSectionAdapter, true);
+            stickySectionLayout.setAdapter(proSectionAdapter, true);
             stickySectionLayout.setLayoutManager(mLayoutManager);
             listView.addView(stickySectionLayout);
         }
@@ -141,7 +191,7 @@ public class ProFragment extends Fragment {
         MySectionHeader header = new MySectionHeader(headerText);
         ArrayList<MySectionItem> contents = new ArrayList<>();
         for (int i = 0; i < 2; i++) {
-            contents.add(new MySectionItem("item " + i));
+            contents.add(new MySectionItem(""+i,"Name-"+i, "introduce-"+i));
         }
         QMUISection<MySectionHeader, MySectionItem> section = new QMUISection<>(header, contents, isFold);
         //是否需要加载更多
@@ -167,5 +217,4 @@ public class ProFragment extends Fragment {
             requestPostMap = HttpUtil.requestPost(TAG, RequestConstant.LOGINED_USER_URL, null);
         }
     };
-
 }

@@ -100,10 +100,10 @@ public class ProSectionAdapter extends QMUIDefaultStickySectionAdapter<MySection
     protected void onBindSectionItem(ViewHolder holder, int position, QMUISection<MySectionHeader, MySectionItem> section, int itemIndex) {
 
         LinearLayout linearLayoutRoot = (LinearLayout) holder.itemView;
+        linearLayoutRoot.setBackgroundColor(Color.RED);
 
         LinearLayout layout = new LinearLayout(context);
         layout.setBackgroundColor(Color.GRAY);
-
         //设置子元素独占一行
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.setPadding(0, 20, 0,40);
@@ -116,16 +116,12 @@ public class ProSectionAdapter extends QMUIDefaultStickySectionAdapter<MySection
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ViewGroup group = (ViewGroup) v;
-                for(int i = 0; i < group.getChildCount(); i++){
-                    ViewGroup childGroup = (ViewGroup) group.getChildAt(i);
-                    String proId = (String) childGroup.getChildAt(0).getTag();
-                    Toast.makeText(context, proId, Toast.LENGTH_SHORT).show();
-                    return;
-                }
+                String proId = getProIdFromRootView(v);
+                Toast.makeText(context, proId, Toast.LENGTH_SHORT).show();
             }
         });
 
+        MySectionItem sectionItem = section.getItemAt(itemIndex);
         //设置项目名称标题
         LinearLayout titleLayout = new LinearLayout(context);
         setViewMargins(titleLayout, new int[]{0,0,0,0});
@@ -134,9 +130,9 @@ public class ProSectionAdapter extends QMUIDefaultStickySectionAdapter<MySection
         TextView proNameTitleView = createTitleView("项目名称：", new int[]{60, 0, 0,20});
 
         //设置项目ID
-        proNameTitleView.setTag("12345678");
+        proNameTitleView.setTag(sectionItem.getId());
         titleLayout.addView(proNameTitleView);
-        TextView proNameContentView = createContentView("测试项目名称", false,true);
+        TextView proNameContentView = createContentView(sectionItem.getName(), false,true);
         proNameContentView.setPadding(0,0,0,0);
         setViewMargins(proNameContentView, new int[]{0,0,0,0});
         titleLayout.addView(proNameContentView);
@@ -150,7 +146,7 @@ public class ProSectionAdapter extends QMUIDefaultStickySectionAdapter<MySection
 
         TextView proIntroduceTitleView = createTitleView("项目介绍：", null);
         contentLayout.addView(proIntroduceTitleView);
-        TextView proIntroduceContentView = createContentView("这是测试内容试内容这是测试内容试内容这是测试内容试内容这是测试内容试内容", true, false);
+        TextView proIntroduceContentView = createContentView(sectionItem.getIntroduce(), true, false);
         contentLayout.addView(proIntroduceContentView);
         layout.addView(contentLayout);
 
@@ -170,6 +166,7 @@ public class ProSectionAdapter extends QMUIDefaultStickySectionAdapter<MySection
         layout.addView(imgLayout);
 
         //渲染
+        System.out.println("-------------------------: " + linearLayoutRoot.getHeight());
         linearLayoutRoot.addView(layout);
     }
 
@@ -178,6 +175,24 @@ public class ProSectionAdapter extends QMUIDefaultStickySectionAdapter<MySection
         super.onBindSectionLoadingItem(holder, position, section, loadingBefore);
     }
 
+    private String getProIdFromRootView(View view){
+        try {
+            ViewGroup group = (ViewGroup) view;
+            ViewGroup childGroup = (ViewGroup) group.getChildAt(0);
+            String proId = (String) childGroup.getChildAt(0).getTag();
+            return proId;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * @Author 陈迎博
+     * @Title 创建标题视图
+     * @Description
+     * @Date 2021/3/14
+     */
     private TextView createTitleView(String character, int[] padding){
 
         TextView titleView = new TextView(context);

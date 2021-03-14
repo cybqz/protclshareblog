@@ -11,24 +11,36 @@ import com.qmuiteam.qmui.widget.section.QMUISection;
  */
 public class MySectionItem implements QMUISection.Model<MySectionItem>{
 
-    private final String text;
+    private final String id;
+    private final String name;
+    private final String introduce;
 
-    public MySectionItem(String text){
-        this.text = text;
+    public MySectionItem(String id,String name,String introduce){
+        this.id = id;
+        this.name = name;
+        this.introduce = introduce;
     }
 
-    public String getText() {
-        return text;
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getIntroduce() {
+        return introduce;
     }
 
     @Override
     public MySectionItem cloneForDiff() {
-        return new MySectionItem(getText());
+        return new MySectionItem(getId(),getName(),getIntroduce());
     }
 
     @Override
     public boolean isSameItem(MySectionItem other) {
-        return text == other.text || (text != null && text.equals(other.text));
+        return id == other.id || (id != null && id.equals(other.id));
     }
 
     @Override
