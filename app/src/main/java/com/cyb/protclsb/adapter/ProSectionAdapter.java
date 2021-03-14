@@ -22,7 +22,7 @@ import com.qmuiteam.qmui.widget.section.QMUISection;
 import com.qmuiteam.qmui.widget.textview.QMUILinkTextView;
 
 /**
- * ProQDGridSectionAdapter
+ * ProSectionAdapter
  *
  * @Author 陈迎博
  * @Description
@@ -99,12 +99,14 @@ public class ProSectionAdapter extends QMUIDefaultStickySectionAdapter<MySection
     @Override
     protected void onBindSectionItem(ViewHolder holder, int position, QMUISection<MySectionHeader, MySectionItem> section, int itemIndex) {
 
-        LinearLayout layout = (LinearLayout) holder.itemView;
+        LinearLayout linearLayoutRoot = (LinearLayout) holder.itemView;
+
+        LinearLayout layout = new LinearLayout(context);
         layout.setBackgroundColor(Color.GRAY);
 
         //设置子元素独占一行
         layout.setOrientation(LinearLayout.VERTICAL);
-        layout.setPadding(0, 20, 0,0);
+        layout.setPadding(0, 20, 0,40);
         setViewMargins(layout, new int[]{0,20,0,20});
 
         //父布局会优先子布局获取焦点
@@ -116,42 +118,59 @@ public class ProSectionAdapter extends QMUIDefaultStickySectionAdapter<MySection
             public void onClick(View v) {
                 ViewGroup group = (ViewGroup) v;
                 for(int i = 0; i < group.getChildCount(); i++){
-                    View child = group.getChildAt(i);
-                    Toast.makeText(context, child.getId(), Toast.LENGTH_SHORT).show();
+                    ViewGroup childGroup = (ViewGroup) group.getChildAt(i);
+                    String proId = (String) childGroup.getChildAt(0).getTag();
+                    Toast.makeText(context, proId, Toast.LENGTH_SHORT).show();
+                    return;
                 }
             }
         });
 
         //设置项目名称标题
         LinearLayout titleLayout = new LinearLayout(context);
-        TextView proNameTitleView = createTitleView("项目名称：");
-        proNameTitleView.setId(100000);
+        setViewMargins(titleLayout, new int[]{0,0,0,0});
+        titleLayout.setClickable(false);
+
+        TextView proNameTitleView = createTitleView("项目名称：", new int[]{60, 0, 0,20});
+
+        //设置项目ID
+        proNameTitleView.setTag("12345678");
         titleLayout.addView(proNameTitleView);
-        TextView proNameContentView = createContentView("测试项目名称", false);
+        TextView proNameContentView = createContentView("测试项目名称", false,true);
         proNameContentView.setPadding(0,0,0,0);
         setViewMargins(proNameContentView, new int[]{0,0,0,0});
         titleLayout.addView(proNameContentView);
-        setViewMargins(titleLayout, new int[]{0,0,0,0});
         layout.addView(titleLayout);
 
         //设置项目介绍
         LinearLayout contentLayout = new LinearLayout(context);
-        TextView proIntroduceView = createTitleView("项目介绍：");
-        contentLayout.addView(proIntroduceView);
-        TextView proIntroduceContentView = createContentView("这是测试内容试内容这是测试内容试内容这是测试内容试内容这是测试内容试内容", true);
-        contentLayout.addView(proIntroduceContentView);
         contentLayout.setOrientation(LinearLayout.VERTICAL);
+        setViewMargins(contentLayout, new int[]{60,10,60,10});
+        contentLayout.setClickable(false);
+
+        TextView proIntroduceTitleView = createTitleView("项目介绍：", null);
+        contentLayout.addView(proIntroduceTitleView);
+        TextView proIntroduceContentView = createContentView("这是测试内容试内容这是测试内容试内容这是测试内容试内容这是测试内容试内容", true, false);
+        contentLayout.addView(proIntroduceContentView);
         layout.addView(contentLayout);
 
         //设置项目运行截图
         LinearLayout imgLayout = new LinearLayout(context);
+        imgLayout.setOrientation(LinearLayout.VERTICAL);
+        setViewMargins(imgLayout, new int[]{60,10,60,10});
+        imgLayout.setClickable(false);
+
+        TextView proRunPicTitleView = createTitleView("运行截图：", new int[]{0,0,0,10});
+        imgLayout.addView(proRunPicTitleView);
         ImageView imageView = new ImageView(context);
         imageView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 500));
         imageView.setImageResource(R.drawable.t_pro);
         imageView.setBackgroundColor(Color.BLUE);
-        setViewMargins(imgLayout, new int[]{60,10,60,0});
         imgLayout.addView(imageView);
         layout.addView(imgLayout);
+
+        //渲染
+        linearLayoutRoot.addView(layout);
     }
 
     @Override
@@ -159,12 +178,14 @@ public class ProSectionAdapter extends QMUIDefaultStickySectionAdapter<MySection
         super.onBindSectionLoadingItem(holder, position, section, loadingBefore);
     }
 
-    private TextView createTitleView(String character){
+    private TextView createTitleView(String character, int[] padding){
 
         TextView titleView = new TextView(context);
         titleView.setText(character);
         titleView.setTextSize(20);
-        titleView.setPadding(outerPaddingLeft + 40, 0, 0,20);
+        if(null != padding && padding.length > 0){
+            titleView.setPadding(padding[0], padding[1], padding[2],padding[3]);
+        }
         ViewGroup.LayoutParams descLayoutParams = titleView.getLayoutParams();
         if(null != descLayoutParams){
             descLayoutParams.width = displayMetrics.widthPixels - 50;
@@ -180,7 +201,7 @@ public class ProSectionAdapter extends QMUIDefaultStickySectionAdapter<MySection
      * @param character 内容
      * @param isIndent 是否首行缩进
      */
-    private TextView createContentView(String character,boolean isIndent){
+    private TextView createContentView(String character,boolean isIndent, boolean isSetPadding){
 
         if(isIndent){
             character = "\u3000\u3000" + character;
@@ -188,7 +209,9 @@ public class ProSectionAdapter extends QMUIDefaultStickySectionAdapter<MySection
         TextView titleView = new TextView(context);
         titleView.setText(character);
         titleView.setTextSize(16);
-        titleView.setPadding(outerPaddingLeft + 40, 0, 0,20);
+        if(isSetPadding){
+            titleView.setPadding(outerPaddingLeft + 40, 0, 0,20);
+        }
         ViewGroup.LayoutParams descLayoutParams = titleView.getLayoutParams();
         if(null != descLayoutParams){
             descLayoutParams.width = displayMetrics.widthPixels - 50;
