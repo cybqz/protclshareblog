@@ -100,6 +100,16 @@ public class ProSectionAdapter extends QMUIDefaultStickySectionAdapter<MySection
     protected void onBindSectionItem(ViewHolder holder, int position, QMUISection<MySectionHeader, MySectionItem> section, int itemIndex) {
 
         LinearLayout linearLayoutRoot = (LinearLayout) holder.itemView;
+        String proId = (String) linearLayoutRoot.getTag();
+        MySectionItem sectionItem = section.getItemAt(itemIndex);
+
+        /**
+         * 如果已渲染，则直接返回
+         */
+        if(sectionItem.getId().equals(proId)){
+            return;
+        }
+        linearLayoutRoot.setTag(sectionItem.getId());
         linearLayoutRoot.setBackgroundColor(Color.RED);
 
         LinearLayout layout = new LinearLayout(context);
@@ -107,6 +117,7 @@ public class ProSectionAdapter extends QMUIDefaultStickySectionAdapter<MySection
         //设置子元素独占一行
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.setPadding(0, 20, 0,40);
+        layout.setTag(sectionItem.getId());
         setViewMargins(layout, new int[]{0,20,0,20});
 
         //父布局会优先子布局获取焦点
@@ -121,7 +132,6 @@ public class ProSectionAdapter extends QMUIDefaultStickySectionAdapter<MySection
             }
         });
 
-        MySectionItem sectionItem = section.getItemAt(itemIndex);
         //设置项目名称标题
         LinearLayout titleLayout = new LinearLayout(context);
         setViewMargins(titleLayout, new int[]{0,0,0,0});
@@ -165,8 +175,6 @@ public class ProSectionAdapter extends QMUIDefaultStickySectionAdapter<MySection
         imgLayout.addView(imageView);
         layout.addView(imgLayout);
 
-        //渲染
-        System.out.println("-------------------------: " + linearLayoutRoot.getHeight());
         linearLayoutRoot.addView(layout);
     }
 
@@ -175,6 +183,11 @@ public class ProSectionAdapter extends QMUIDefaultStickySectionAdapter<MySection
         super.onBindSectionLoadingItem(holder, position, section, loadingBefore);
     }
 
+    /**
+     * 获取项目ID
+     * @param view
+     * @return
+     */
     private String getProIdFromRootView(View view){
         try {
             ViewGroup group = (ViewGroup) view;

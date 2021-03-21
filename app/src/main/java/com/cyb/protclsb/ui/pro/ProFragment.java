@@ -86,8 +86,8 @@ public class ProFragment extends Fragment {
         observableScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
             public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                System.out.println(oldScrollX + "," + scrollX);
-                System.out.println(oldScrollY + "," + scrollY);
+                //System.out.println(oldScrollX + "," + scrollX);
+                //System.out.println(oldScrollY + "," + scrollY);
             }
         });
     }
