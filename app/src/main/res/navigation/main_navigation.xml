@@ -9,7 +9,7 @@
             android:id="@+id/navigation_home"
             android:name="com.cyb.protclsb.ui.pro.ProFragment"
             android:label="@string/title_pro"
-            tools:layout="@layout/fragment_pro_c"/>
+            tools:layout="@layout/fragment_pro"/>
 
     <fragment
             android:id="@+id/navigation_notifications"
@@ -18,8 +18,8 @@
             tools:layout="@layout/fragment_tcl"/>
 
     <fragment
-            android:id="@+id/navigation_forum"
-            android:name="com.cyb.protclsb.ui.forum.ForumFragment"
-            android:label="@string/title_forum"
-            tools:layout="@layout/fragment_forum"/>
+            android:id="@+id/navigation_me"
+            android:name="com.cyb.protclsb.ui.me.MeFragment"
+            android:label="@string/title_me"
+            tools:layout="@layout/fragment_me"/>
 </navigation>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.qmuiteam.qmui.widget.QMUIWindowInsetLayout
+        android:background="@color/qmui_config_color_white"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView
+            android:id="@+id/me_operation_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+    </com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView>
+</com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>

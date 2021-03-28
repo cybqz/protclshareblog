@@ -12,7 +12,7 @@
             android:title="@string/title_tcl"/>
 
     <item
-            android:id="@+id/navigation_forum"
+            android:id="@+id/navigation_me"
             android:icon="@drawable/ic_forum_black_24dp"
-            android:title="@string/title_forum"/>
+            android:title="@string/title_me"/>
 </menu>

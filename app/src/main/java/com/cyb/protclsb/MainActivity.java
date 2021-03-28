@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.*;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
 import com.cyb.protclsb.common.TipsEnum;
@@ -39,8 +40,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // 隐藏状态栏
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         //隐藏标题栏
         //getSupportActionBar().hide();
@@ -54,11 +54,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_main);
+
+        //设置底部导航栏
         BottomNavigationView navView = findViewById(R.id.nav_view);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_home,
                 R.id.navigation_notifications,
-                R.id.navigation_forum)
+                R.id.navigation_me)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
@@ -70,11 +72,10 @@ public class MainActivity extends AppCompatActivity {
      * @param item
      * @return
      */
-    @Override
+    /*@Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         Context context = getApplicationContext();
-
         OptionController optionController = new OptionController(context);
         switch (item.getItemId()) {
             case R.id.navigation_logout:
@@ -88,18 +89,17 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
     /**
      * 设置头部下拉选
      * @param menu
      * @return
      */
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         Log.e("MainActivity","onCreateOptionsMenu");
         getMenuInflater().inflate(R.menu.option_menu, menu);
-
         return super.onCreateOptionsMenu(menu);
-    }
+    }*/
 }

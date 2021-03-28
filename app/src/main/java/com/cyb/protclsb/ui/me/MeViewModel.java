@@ -1,14 +1,14 @@
-package com.cyb.protclsb.ui.forum;
+package com.cyb.protclsb.ui.me;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class ForumViewModel extends ViewModel {
+public class MeViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public ForumViewModel() {
+    public MeViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is home fragment");
     }

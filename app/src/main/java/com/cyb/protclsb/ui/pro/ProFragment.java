@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
-import android.widget.ListAdapter;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -28,7 +28,6 @@ import com.qmuiteam.qmui.widget.pullRefreshLayout.QMUIPullRefreshLayout;
 import com.qmuiteam.qmui.widget.section.QMUISection;
 import com.qmuiteam.qmui.widget.section.QMUIStickySectionLayout;
 import org.json.JSONObject;
-
 import java.util.*;
 
 /**
@@ -63,6 +62,8 @@ public class ProFragment extends Fragment {
             displayMetrics = this.getResources().getDisplayMetrics();
 
             root = inflater.inflate(R.layout.fragment_pro, container, false);
+            setRootView();
+
             listView = root.findViewById(R.id.pro_section_list);
             pullRefreshLayout = root.findViewById(R.id.pro_pull_to_refresh);
             observableScrollView = root.findViewById(R.id.pro_observable_scroll_view);
@@ -74,6 +75,16 @@ public class ProFragment extends Fragment {
             e.printStackTrace();
         }
         return root;
+    }
+
+    private void setRootView(){
+        try {
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            layoutParams.setMargins(0, 20, 0, 300);
+            root.setLayoutParams(layoutParams);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     /**
