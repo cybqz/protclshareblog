@@ -1,23 +1,29 @@
 package com.cyb.protclsb;
 
-import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.*;
-import android.widget.LinearLayout;
-import android.widget.Toast;
+import android.widget.TextView;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import com.cyb.protclsb.common.TipsEnum;
-import com.cyb.protclsb.R;
-import com.cyb.protclsb.ui.option.OptionController;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import com.cyb.protclsb.ui.me.MeFragment;
+import com.cyb.protclsb.ui.pro.ProFragment;
+import com.cyb.protclsb.ui.tcl.TclFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -56,15 +62,58 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //设置底部导航栏
-        BottomNavigationView navView = findViewById(R.id.nav_view);
+        final BottomNavigationView bottomNavigationView = findViewById(R.id.nav_view);
+        initBottomNavigationView(bottomNavigationView);
+
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home,
-                R.id.navigation_notifications,
+                R.id.navigation_pro,
+                R.id.navigation_tcl,
                 R.id.navigation_me)
                 .build();
+
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(navView, navController);
+        NavigationUI.setupWithNavController(bottomNavigationView, navController);
+
+        //设置导航栏菜单项Item选中监听
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Fragment targetFragment = null;
+                switch (item.getItemId()) {
+                    case R.id.navigation_pro:
+                        targetFragment = new ProFragment();
+                        break;
+                    case R.id.navigation_tcl:
+                        targetFragment = new TclFragment();
+                        break;
+                    case R.id.navigation_me:
+                        targetFragment = new MeFragment();
+                        break;
+                    default:
+                        targetFragment = new ProFragment();
+                }
+
+                //切换内容
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_fragment, targetFragment);
+                transaction.commit();
+                return true;
+            }
+        });
+    }
+
+    private void initBottomNavigationView(BottomNavigationView bottomNavigationView){
+        Drawable itemBackgroundDrawable = new ColorDrawable();
+        itemBackgroundDrawable.setTint(Color.WHITE);
+        bottomNavigationView.setItemBackground(itemBackgroundDrawable);
+
+        int[][] states = new int[2][];
+        states[0] = new int[]{android.R.attr.state_checked};
+        states[1] = new int[]{-android.R.attr.state_checked};
+        ColorStateList colorStateList = new ColorStateList(states,new int[]{Color.BLUE,Color.GRAY});
+        bottomNavigationView.setItemTextColor(colorStateList);
+        bottomNavigationView.setItemIconTintList(colorStateList);
     }
 
     /**

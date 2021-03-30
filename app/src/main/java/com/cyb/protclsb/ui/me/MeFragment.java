@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import com.cyb.protclsb.MainActivity;
 import com.cyb.protclsb.R;
+import com.cyb.protclsb.util.ToastUtil;
 import com.qmuiteam.qmui.widget.QMUILoadingView;
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
 import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
@@ -73,7 +74,7 @@ public class MeFragment extends Fragment {
             public void onClick(View v) {
                 if (v instanceof QMUICommonListItemView) {
                     CharSequence text = ((QMUICommonListItemView) v).getText();
-                    Toast.makeText(getActivity(), text + " is Clicked", Toast.LENGTH_SHORT).show();
+                    ToastUtil.showToastShort(getActivity(), text + " is Clicked");
                 }
             }
         };//默认文字在左边   自定义加载框按钮
