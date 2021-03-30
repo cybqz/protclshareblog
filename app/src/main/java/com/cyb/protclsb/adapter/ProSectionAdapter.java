@@ -2,24 +2,19 @@ package com.cyb.protclsb.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
 import android.view.*;
 import android.widget.*;
 import androidx.annotation.NonNull;
-import com.bumptech.glide.Glide;
-import com.cyb.protclsb.R;
 import com.cyb.protclsb.mode.MySectionHeader;
 import com.cyb.protclsb.mode.MySectionItem;
-import com.qmuiteam.qmui.span.QMUIMarginImageSpan;
-import com.qmuiteam.qmui.span.QMUITextSizeSpan;
-import com.qmuiteam.qmui.widget.QMUIEmptyView;
-import com.qmuiteam.qmui.widget.QMUIFloatLayout;
+import com.cyb.protclsb.mode.ProBannerImageBean;
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
-import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
 import com.qmuiteam.qmui.widget.section.QMUIDefaultStickySectionAdapter;
 import com.qmuiteam.qmui.widget.section.QMUISection;
-import com.qmuiteam.qmui.widget.textview.QMUILinkTextView;
+import com.youth.banner.Banner;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * ProSectionAdapter
@@ -168,11 +163,10 @@ public class ProSectionAdapter extends QMUIDefaultStickySectionAdapter<MySection
 
         TextView proRunPicTitleView = createTitleView("运行截图：", new int[]{0,0,0,10});
         imgLayout.addView(proRunPicTitleView);
-        ImageView imageView = new ImageView(context);
-        imageView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 500));
-        imageView.setImageResource(R.drawable.t_pro);
-        imageView.setBackgroundColor(Color.BLUE);
-        imgLayout.addView(imageView);
+
+        Banner banner = new Banner(imgLayout.getContext());
+        initProImgBanner(banner);
+        imgLayout.addView(banner);
         layout.addView(imgLayout);
 
         linearLayoutRoot.addView(layout);
@@ -181,6 +175,17 @@ public class ProSectionAdapter extends QMUIDefaultStickySectionAdapter<MySection
     @Override
     protected void onBindSectionLoadingItem(ViewHolder holder, int position, QMUISection<MySectionHeader, MySectionItem> section, boolean loadingBefore) {
         super.onBindSectionLoadingItem(holder, position, section, loadingBefore);
+    }
+
+    private void initProImgBanner(Banner banner){
+
+        //设置内置样式，共有六种可以点入方法内逐一体验使用。
+        List<ProBannerImageBean> proBannerImageBeanList = Arrays.asList(
+                new ProBannerImageBean("https://img2.baidu.com/it/u=294937280,3894744759&fm=26&fmt=auto&gp=0.jpg"),
+                new ProBannerImageBean("https://img1.baidu.com/it/u=2476231256,1469186843&fm=26&fmt=auto&gp=0.jpg"));
+
+        ProBannerImageAdapter proBannerImageAdapter = new ProBannerImageAdapter(proBannerImageBeanList,context);
+        banner.setAdapter(proBannerImageAdapter);
     }
 
     /**

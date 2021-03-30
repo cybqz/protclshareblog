@@ -1,5 +1,7 @@
 package com.cyb.protclsb.util;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import com.cyb.protclsb.common.TipsEnum;
 import com.cyb.protclsb.ui.login.LoginViewModel;
@@ -12,7 +14,50 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Map;
 
+/**
+ * 网络请求辅助类
+ *
+ * @Author 陈迎博
+ * @Description
+ * @Date 2021/3/30
+ */
 public class HttpUtil {
+
+    /**
+     * 加载网络图片
+     *
+     * @Author 陈迎博
+     * @Title
+     * @Description
+     * @Date 2021/3/30
+     */
+    public static Bitmap getHttpBitmap(String url) {
+        URL myFileURL;
+        Bitmap bitmap = null;
+        try {
+            myFileURL = new URL(url);
+            // 获得连接
+            HttpURLConnection conn = (HttpURLConnection) myFileURL
+                    .openConnection();
+            // 设置超时时间为6000毫秒，conn.setConnectionTiem(0);表示没有时间限制
+            conn.setConnectTimeout(6000);
+            // 连接设置获得数据流
+            conn.setDoInput(true);
+            // 不使用缓存
+            conn.setUseCaches(false);
+            // 这句可有可无，没有影响
+            // conn.connect();
+            // 得到数据流
+            InputStream is = conn.getInputStream();
+            // 解析得到图片
+            bitmap = BitmapFactory.decodeStream(is);
+            // 关闭数据流
+            is.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bitmap;
+    }
 
     /**
      * post提交数据
@@ -119,7 +164,6 @@ public class HttpUtil {
     }
 
     public static JSONObject setResult(String message){
-
         try {
             JSONObject result = new JSONObject();
             result.put("r", message);
@@ -127,7 +171,6 @@ public class HttpUtil {
         }catch (Exception e){
             e.printStackTrace();
         }
-
         return null;
     }
 }
