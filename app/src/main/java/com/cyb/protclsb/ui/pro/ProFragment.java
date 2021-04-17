@@ -1,23 +1,23 @@
 package com.cyb.protclsb.ui.pro;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.bumptech.glide.Glide;
 import com.cyb.protclsb.MainActivity;
 import com.cyb.protclsb.adapter.ProSectionAdapter;
 import com.cyb.protclsb.common.RequestConstant;
+import com.cyb.protclsb.listener.ProClickListener;
 import com.cyb.protclsb.mode.MySectionHeader;
 import com.cyb.protclsb.mode.MySectionItem;
 import com.cyb.protclsb.util.HttpUtil;
@@ -39,7 +39,7 @@ import java.util.*;
  * @Description
  * @Date 2021/2/27
  */
-public class ProFragment extends Fragment {
+public class ProFragment extends Fragment implements ProClickListener {
 
     private static String TAG = MainActivity.class.getCanonicalName();
     private String fragmentName = "ProFragment";
@@ -76,6 +76,21 @@ public class ProFragment extends Fragment {
             e.printStackTrace();
         }
         return root;
+    }
+
+    @Override
+    public void onClickListener(String proId) {
+
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        ProDetailFragment proDetailFragment = new ProDetailFragment();
+        Bundle args = new Bundle();
+        args.putString("proId", proId);
+        proDetailFragment.setArguments(args);
+        transaction.addToBackStack("ToBackStack");
+        transaction.replace(R.id.activity_main_id, proDetailFragment);
+        //transaction.commitAllowingStateLoss();
+        transaction.commit();
+        System.out.println("跳转至proDetailFragment....");
     }
 
     private void setRootView(){
@@ -134,7 +149,7 @@ public class ProFragment extends Fragment {
 
         for(int i = 1; i <= count; i++){
 
-            proSectionAdapter = new ProSectionAdapter(getContext(), displayMetrics);
+            proSectionAdapter = new ProSectionAdapter(getContext(), displayMetrics, this);
             proSectionAdapter.setData(Arrays.asList(createSection("Header-" + i, true)));
 
             mLayoutManager = createLayoutManager();
@@ -212,7 +227,7 @@ public class ProFragment extends Fragment {
         return section;
     }
 
-    protected RecyclerView.LayoutManager createLayoutManager() {
+    private RecyclerView.LayoutManager createLayoutManager() {
         return new LinearLayoutManager(getContext()) {
             @Override
             public RecyclerView.LayoutParams generateDefaultLayoutParams() {

@@ -12,6 +12,12 @@
             tools:layout="@layout/fragment_pro"/>
 
     <fragment
+            android:id="@+id/navigation_pro_detail"
+            android:name="com.cyb.protclsb.ui.pro.ProDetailFragment"
+            android:label="@string/title_pro_detail"
+            tools:layout="@layout/fragment_pro_detail"/>
+
+    <fragment
             android:id="@+id/navigation_tcl"
             android:name="com.cyb.protclsb.ui.tcl.TclFragment"
             android:label="@string/title_tcl"

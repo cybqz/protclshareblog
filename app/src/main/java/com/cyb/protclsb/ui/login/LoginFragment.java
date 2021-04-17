@@ -27,6 +27,13 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * LoginFragment
+ *
+ * @Author 陈迎博
+ * @Description
+ * @Date 2021/4/17
+ */
 public class LoginFragment extends Fragment implements View.OnClickListener {
 
     private static  String TAG = LoginFragment.class.getCanonicalName();

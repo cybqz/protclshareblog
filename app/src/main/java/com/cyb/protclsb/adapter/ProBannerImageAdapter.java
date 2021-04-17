@@ -12,6 +12,13 @@ import com.cyb.protclsb.util.HttpUtil;
 import com.youth.banner.adapter.BannerAdapter;
 import java.util.List;
 
+/**
+ * ProBannerImageAdapter
+ *
+ * @Author 陈迎博
+ * @Description
+ * @Date 2021/4/17
+ */
 public class ProBannerImageAdapter extends BannerAdapter<ProBannerImageBean, ProBannerImageAdapter.BannerViewHolder> {
 
     private Context context;
@@ -27,7 +34,6 @@ public class ProBannerImageAdapter extends BannerAdapter<ProBannerImageBean, Pro
     public BannerViewHolder onCreateHolder(ViewGroup parent, int viewType) {
         ImageView imageView = new ImageView(parent.getContext());
         //注意，必须设置为match_parent，这个是viewpager2强制要求的
-        imageView.setMaxHeight(400);
         imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         return new BannerViewHolder(imageView);

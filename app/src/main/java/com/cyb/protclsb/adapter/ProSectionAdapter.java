@@ -6,6 +6,7 @@ import android.util.DisplayMetrics;
 import android.view.*;
 import android.widget.*;
 import androidx.annotation.NonNull;
+import com.cyb.protclsb.listener.ProClickListener;
 import com.cyb.protclsb.mode.MySectionHeader;
 import com.cyb.protclsb.mode.MySectionItem;
 import com.cyb.protclsb.mode.ProBannerImageBean;
@@ -25,6 +26,7 @@ import java.util.List;
  */
 public class ProSectionAdapter extends QMUIDefaultStickySectionAdapter<MySectionHeader, MySectionItem> {
 
+    private ProClickListener proClickListener;
     private DisplayMetrics displayMetrics;
     private LayoutInflater inflater;
     private Context context;
@@ -34,8 +36,9 @@ public class ProSectionAdapter extends QMUIDefaultStickySectionAdapter<MySection
     private int outerPaddingRight = 40;
     private int outerPaddingBottom = 40;
 
-    public ProSectionAdapter(Context context, DisplayMetrics displayMetrics){
+    public ProSectionAdapter(Context context, DisplayMetrics displayMetrics, ProClickListener proClickListener){
         this.inflater = LayoutInflater.from(context);
+        this.proClickListener = proClickListener;
         this.displayMetrics = displayMetrics;
         this.context = context;
     }
@@ -123,7 +126,7 @@ public class ProSectionAdapter extends QMUIDefaultStickySectionAdapter<MySection
             @Override
             public void onClick(View v) {
                 String proId = getProIdFromRootView(v);
-                Toast.makeText(context, proId, Toast.LENGTH_SHORT).show();
+                proClickListener.onClickListener(proId);
             }
         });
 
@@ -186,6 +189,7 @@ public class ProSectionAdapter extends QMUIDefaultStickySectionAdapter<MySection
 
         ProBannerImageAdapter proBannerImageAdapter = new ProBannerImageAdapter(proBannerImageBeanList,context);
         banner.setAdapter(proBannerImageAdapter);
+        banner.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,600));
     }
 
     /**

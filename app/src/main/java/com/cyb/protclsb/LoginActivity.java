@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_login)
                 .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavController navController = Navigation.findNavController(this, R.id.activity_login_id);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         //NavigationUI.setupWithNavController(navView, navController);
     }

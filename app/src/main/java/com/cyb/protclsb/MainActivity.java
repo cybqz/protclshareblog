@@ -23,8 +23,6 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import java.util.Set;
-
 public class MainActivity extends AppCompatActivity {
 
     private static  String TAG =  MainActivity.class.getCanonicalName();
@@ -67,11 +65,11 @@ public class MainActivity extends AppCompatActivity {
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_pro,
+                R.id.navigation_pro_detail,
                 R.id.navigation_tcl,
-                R.id.navigation_me)
-                .build();
+                R.id.navigation_me).build();
 
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavController navController = Navigation.findNavController(this, R.id.activity_main_id);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
@@ -96,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
                 //切换内容
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.nav_host_fragment, targetFragment);
+                transaction.replace(R.id.activity_main_id, targetFragment);
                 transaction.commit();
                 return true;
             }
