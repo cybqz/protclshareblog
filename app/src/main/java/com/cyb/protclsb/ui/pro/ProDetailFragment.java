@@ -1,24 +1,22 @@
 package com.cyb.protclsb.ui.pro;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
-import android.widget.Toast;
+import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import com.cyb.protclsb.MainActivity;
 import com.cyb.protclsb.R;
 import com.cyb.protclsb.common.RequestConstant;
 import com.cyb.protclsb.util.HttpUtil;
-import com.qmuiteam.qmui.widget.QMUILoadingView;
-import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
+import com.cyb.protclsb.util.ToastUtil;
+import com.cyb.protclsb.util.ViewUtil;
 import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
-import com.qmuiteam.qmui.widget.section.QMUIStickySectionLayout;
+import com.youth.banner.Banner;
 import org.json.JSONObject;
 
 /**
@@ -37,6 +35,8 @@ public class ProDetailFragment extends Fragment {
     private QMUIGroupListView listView;
     private JSONObject requestPostMap = new JSONObject();
 
+
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -48,13 +48,29 @@ public class ProDetailFragment extends Fragment {
             listView = root.findViewById(R.id.pro_detail_list);
             if(null != getArguments()){
                 proId = getArguments().getString("proId");
+                //根据proId查询项目完整信息
+                getProInfoData();
+                //渲染页面
+                render();
+                ToastUtil.showToastShort(getActivity(),"Render success for" + proId);
+            }else {
+                ToastUtil.showToastShort(getActivity(),"Arguments is null");
             }
-
-            demo();
         }catch (Exception e){
             e.printStackTrace();
         }
         return root;
+    }
+
+    /**
+     * 根据proId查询项目完整信息
+     *
+     * @Author 陈迎博
+     * @Title 根据proId查询项目完整信息
+     * @Description
+     * @Date 2021/4/17
+     */
+    private void getProInfoData() {
     }
 
     private void setRootView(){
@@ -67,62 +83,65 @@ public class ProDetailFragment extends Fragment {
         }
     }
 
-    private void demo(){
+    private void render(){
 
-        QMUICommonListItemView  normalItem = listView.createItemView("Item 1");
-        normalItem.setOrientation(QMUICommonListItemView.VERTICAL); //默认文字在左边
+        LinearLayout layout = new LinearLayout(getContext());
+        layout.setBackgroundColor(Color.GRAY);
+        //设置子元素独占一行
+        layout.setOrientation(LinearLayout.VERTICAL);
+        layout.setPadding(0, 20, 0,40);
+        layout.setTag(proId);
+        ViewUtil.setViewMargins(layout, new int[]{0,20,0,20});
 
-        QMUICommonListItemView itemWithDetail = listView.createItemView("Item 2");
-        itemWithDetail.setDetailText(proId);//默认文字在左边   描述文字在右边
+        //父布局会优先子布局获取焦点
+        layout.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
 
-        QMUICommonListItemView itemWithDetailBelow = listView.createItemView("Item 3");
-        itemWithDetailBelow.setOrientation(QMUICommonListItemView.VERTICAL);
-        itemWithDetailBelow.setDetailText("在标题下方的详细信息");//默认文字在左边   描述文字在标题下边
+        //设置项目名称标题
+        LinearLayout titleLayout = new LinearLayout(getContext());
+        ViewUtil.setViewMargins(titleLayout, new int[]{0,0,0,0});
+        titleLayout.setClickable(false);
 
-        QMUICommonListItemView itemWithChevron = listView.createItemView("Item 4");
-        ////默认文字在左边   右侧更多按钮
-        itemWithChevron.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
+        TextView proNameTitleView = ViewUtil.createTitleView(getContext(), null, "项目名称：", new int[]{60, 0, 0,20});
 
-        QMUICommonListItemView itemWithSwitch = listView.createItemView("Item 5");
-        itemWithSwitch.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_SWITCH);
-        itemWithSwitch.getSwitch().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Toast.makeText(getActivity(), "checked = " + isChecked, Toast.LENGTH_SHORT).show();
-            }
-        });//默认文字在左边   右侧选择按钮
-        QMUICommonListItemView itemWithCustom = listView.createItemView("Item 6");
-        itemWithCustom.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CUSTOM);
-        QMUILoadingView loadingView = new QMUILoadingView(getActivity());
-        itemWithCustom.addAccessoryCustomView(loadingView);
-        View.OnClickListener onClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v instanceof QMUICommonListItemView) {
-                    CharSequence text = ((QMUICommonListItemView) v).getText();
-                    Toast.makeText(getActivity(), text + " is Clicked", Toast.LENGTH_SHORT).show();
-                }
-            }
-        };//默认文字在左边   自定义加载框按钮
+        //设置项目ID
+        proNameTitleView.setTag(proId);
+        titleLayout.addView(proNameTitleView);
+        TextView proNameContentView = ViewUtil.createContentView(getContext(), null, 0, "这是项目名称", false,true);
+        proNameContentView.setPadding(0,0,0,0);
+        ViewUtil.setViewMargins(proNameContentView, new int[]{0,0,0,0});
+        titleLayout.addView(proNameContentView);
+        layout.addView(titleLayout);
 
-        QMUIGroupListView.newSection(getContext())
-                .setTitle("Section 1: 默认提供的样式")
-                .setDescription("Section 1 的描述")
-                .addItemView(normalItem, onClickListener)
-                .addItemView(itemWithDetail, onClickListener)
-                .addItemView(itemWithDetailBelow, onClickListener)
-                .addItemView(itemWithChevron, onClickListener)
-                .addItemView(itemWithSwitch, onClickListener)
-                .addTo(listView);
+        //设置项目介绍
+        LinearLayout contentLayout = new LinearLayout(getContext());
+        contentLayout.setOrientation(LinearLayout.VERTICAL);
+        ViewUtil.setViewMargins(contentLayout, new int[]{60,10,60,10});
+        contentLayout.setClickable(false);
 
-        QMUIGroupListView.newSection(getContext())
-                .setTitle("Section 2: 自定义右侧 View")
-                .addItemView(itemWithCustom, onClickListener)
-                .addTo(listView);
+        TextView proIntroduceTitleView = ViewUtil.createTitleView(getContext(), null, "项目简介：", null);
+        contentLayout.addView(proIntroduceTitleView);
+        TextView proIntroduceContentView = ViewUtil.createContentView(getContext(), null, 0, "这是项目简介", true, false);
+        contentLayout.addView(proIntroduceContentView);
+        layout.addView(contentLayout);
+
+        //设置项目运行截图
+        LinearLayout imgLayout = new LinearLayout(getContext());
+        imgLayout.setOrientation(LinearLayout.VERTICAL);
+        ViewUtil.setViewMargins(imgLayout, new int[]{60,10,60,10});
+        imgLayout.setClickable(false);
+
+        TextView proRunPicTitleView = ViewUtil.createTitleView(getContext(), null, "运行截图：", new int[]{0,0,0,10});
+        imgLayout.addView(proRunPicTitleView);
+
+        Banner banner = new Banner(imgLayout.getContext());
+        ViewUtil.initProImgBanner(getContext(), banner);
+        imgLayout.addView(banner);
+        layout.addView(imgLayout);
+
+        listView.addView(layout);
     }
 
     Runnable postRun = new Runnable() {
-
         @Override
         public void run() {
             requestPostMap = HttpUtil.requestPost(TAG, RequestConstant.LOGINED_USER_URL, null);

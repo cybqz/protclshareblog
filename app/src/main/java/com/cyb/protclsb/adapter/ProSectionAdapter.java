@@ -9,13 +9,11 @@ import androidx.annotation.NonNull;
 import com.cyb.protclsb.listener.ProClickListener;
 import com.cyb.protclsb.mode.MySectionHeader;
 import com.cyb.protclsb.mode.MySectionItem;
-import com.cyb.protclsb.mode.ProBannerImageBean;
+import com.cyb.protclsb.util.ViewUtil;
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
 import com.qmuiteam.qmui.widget.section.QMUIDefaultStickySectionAdapter;
 import com.qmuiteam.qmui.widget.section.QMUISection;
 import com.youth.banner.Banner;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * ProSectionAdapter
@@ -79,8 +77,8 @@ public class ProSectionAdapter extends QMUIDefaultStickySectionAdapter<MySection
             int [] size = new int[]{80, 80};
 
             //获取右侧图标元素，设置大小
-            setViewSize(containerView, size);
-            setViewSize(containerView.getChildAt(0), size);
+            ViewUtil.setViewSize(containerView, size);
+            ViewUtil.setViewSize(containerView.getChildAt(0), size);
 
             //设置方向，添加单机事件
             containerView.setRotation(section.isFold()?0f:90f);
@@ -116,7 +114,7 @@ public class ProSectionAdapter extends QMUIDefaultStickySectionAdapter<MySection
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.setPadding(0, 20, 0,40);
         layout.setTag(sectionItem.getId());
-        setViewMargins(layout, new int[]{0,20,0,20});
+        ViewUtil.setViewMargins(layout, new int[]{0,20,0,20});
 
         //父布局会优先子布局获取焦点
         layout.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
@@ -125,50 +123,50 @@ public class ProSectionAdapter extends QMUIDefaultStickySectionAdapter<MySection
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String proId = getProIdFromRootView(v);
+                String proId = ViewUtil.getProIdFromRootView(v);
                 proClickListener.onClickListener(proId);
             }
         });
 
         //设置项目名称标题
         LinearLayout titleLayout = new LinearLayout(context);
-        setViewMargins(titleLayout, new int[]{0,0,0,0});
+        ViewUtil.setViewMargins(titleLayout, new int[]{0,0,0,0});
         titleLayout.setClickable(false);
 
-        TextView proNameTitleView = createTitleView("项目名称：", new int[]{60, 0, 0,20});
+        TextView proNameTitleView = ViewUtil.createTitleView(context, displayMetrics,"项目名称：", new int[]{60, 0, 0,20});
 
         //设置项目ID
         proNameTitleView.setTag(sectionItem.getId());
         titleLayout.addView(proNameTitleView);
-        TextView proNameContentView = createContentView(sectionItem.getName(), false,true);
+        TextView proNameContentView = ViewUtil.createContentView(context, displayMetrics, outerPaddingLeft, sectionItem.getName(), false,true);
         proNameContentView.setPadding(0,0,0,0);
-        setViewMargins(proNameContentView, new int[]{0,0,0,0});
+        ViewUtil.setViewMargins(proNameContentView, new int[]{0,0,0,0});
         titleLayout.addView(proNameContentView);
         layout.addView(titleLayout);
 
         //设置项目介绍
         LinearLayout contentLayout = new LinearLayout(context);
         contentLayout.setOrientation(LinearLayout.VERTICAL);
-        setViewMargins(contentLayout, new int[]{60,10,60,10});
+        ViewUtil.setViewMargins(contentLayout, new int[]{60,10,60,10});
         contentLayout.setClickable(false);
 
-        TextView proIntroduceTitleView = createTitleView("项目介绍：", null);
+        TextView proIntroduceTitleView = ViewUtil.createTitleView(context, displayMetrics, "项目简介：", null);
         contentLayout.addView(proIntroduceTitleView);
-        TextView proIntroduceContentView = createContentView(sectionItem.getIntroduce(), true, false);
+        TextView proIntroduceContentView = ViewUtil.createContentView(context, displayMetrics, outerPaddingLeft, sectionItem.getIntroduce(), true, false);
         contentLayout.addView(proIntroduceContentView);
         layout.addView(contentLayout);
 
         //设置项目运行截图
         LinearLayout imgLayout = new LinearLayout(context);
         imgLayout.setOrientation(LinearLayout.VERTICAL);
-        setViewMargins(imgLayout, new int[]{60,10,60,10});
+        ViewUtil.setViewMargins(imgLayout, new int[]{60,10,60,10});
         imgLayout.setClickable(false);
 
-        TextView proRunPicTitleView = createTitleView("运行截图：", new int[]{0,0,0,10});
+        TextView proRunPicTitleView = ViewUtil.createTitleView(context,displayMetrics, "运行截图：", new int[]{0,0,0,10});
         imgLayout.addView(proRunPicTitleView);
 
         Banner banner = new Banner(imgLayout.getContext());
-        initProImgBanner(banner);
+        ViewUtil.initProImgBanner(context, banner);
         imgLayout.addView(banner);
         layout.addView(imgLayout);
 
@@ -178,116 +176,5 @@ public class ProSectionAdapter extends QMUIDefaultStickySectionAdapter<MySection
     @Override
     protected void onBindSectionLoadingItem(ViewHolder holder, int position, QMUISection<MySectionHeader, MySectionItem> section, boolean loadingBefore) {
         super.onBindSectionLoadingItem(holder, position, section, loadingBefore);
-    }
-
-    private void initProImgBanner(Banner banner){
-
-        //设置内置样式，共有六种可以点入方法内逐一体验使用。
-        List<ProBannerImageBean> proBannerImageBeanList = Arrays.asList(
-                new ProBannerImageBean("https://img2.baidu.com/it/u=294937280,3894744759&fm=26&fmt=auto&gp=0.jpg"),
-                new ProBannerImageBean("https://img1.baidu.com/it/u=2476231256,1469186843&fm=26&fmt=auto&gp=0.jpg"));
-
-        ProBannerImageAdapter proBannerImageAdapter = new ProBannerImageAdapter(proBannerImageBeanList,context);
-        banner.setAdapter(proBannerImageAdapter);
-        banner.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,600));
-    }
-
-    /**
-     * 获取项目ID
-     * @param view
-     * @return
-     */
-    private String getProIdFromRootView(View view){
-        try {
-            ViewGroup group = (ViewGroup) view;
-            ViewGroup childGroup = (ViewGroup) group.getChildAt(0);
-            String proId = (String) childGroup.getChildAt(0).getTag();
-            return proId;
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    /**
-     * @Author 陈迎博
-     * @Title 创建标题视图
-     * @Description
-     * @Date 2021/3/14
-     */
-    private TextView createTitleView(String character, int[] padding){
-
-        TextView titleView = new TextView(context);
-        titleView.setText(character);
-        titleView.setTextSize(20);
-        if(null != padding && padding.length > 0){
-            titleView.setPadding(padding[0], padding[1], padding[2],padding[3]);
-        }
-        ViewGroup.LayoutParams descLayoutParams = titleView.getLayoutParams();
-        if(null != descLayoutParams){
-            descLayoutParams.width = displayMetrics.widthPixels - 50;
-            descLayoutParams.height = 100;
-        }
-        return titleView;
-    }
-
-    /**
-     * @Author 陈迎博
-     * @Description
-     * @Date 2021/3/7
-     * @param character 内容
-     * @param isIndent 是否首行缩进
-     */
-    private TextView createContentView(String character,boolean isIndent, boolean isSetPadding){
-
-        if(isIndent){
-            character = "\u3000\u3000" + character;
-        }
-        TextView titleView = new TextView(context);
-        titleView.setText(character);
-        titleView.setTextSize(16);
-        if(isSetPadding){
-            titleView.setPadding(outerPaddingLeft + 40, 0, 0,20);
-        }
-        ViewGroup.LayoutParams descLayoutParams = titleView.getLayoutParams();
-        if(null != descLayoutParams){
-            descLayoutParams.width = displayMetrics.widthPixels - 50;
-            descLayoutParams.height = 100;
-        }
-        return titleView;
-    }
-
-    /**
-     * @Author 陈迎博
-     * @Title 设置View宽度、高度
-     * @Description
-     * @Date 2021/3/7
-     */
-    private void setViewSize(View view, int[] size){
-
-        if(null != view){
-            ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
-            if(null != layoutParams){
-                layoutParams.width = size[0];
-                layoutParams.height = size[1];
-                view.setLayoutParams(layoutParams);
-            }else {
-                view.setLayoutParams(new LinearLayout.LayoutParams(size[0],size[1]));
-            }
-        }
-    }
-
-    /**
-     * @Author 陈迎博
-     * @Title 设置View边距
-     * @Description
-     * @Date 2021/3/9
-     */
-    private void setViewMargins(View view, int[] margins){
-        if(null !=view){
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            layoutParams.setMargins(margins[0],margins[1],margins[2],margins[3]);
-            view.setLayoutParams(layoutParams);
-        }
     }
 }
